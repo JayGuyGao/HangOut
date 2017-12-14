@@ -1,133 +1,33 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-    <title>HangOut</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="staticfiles/js/jquery.js"></script>
-    <link href="staticfiles/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="staticfiles/css/font-awesome.min.css" rel="stylesheet">
-    <link href="staticfiles/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" />
-    <link href="staticfiles/css/left_nav.css" rel="stylesheet" />
-    <link href="staticfiles/css/chat.css" rel="stylesheet" />
-    <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
+    <meta charset="UTF-8">
+    <title>Test Index</title>
 </head>
-<body style="font-family:'Microsoft YaHei'" onload="getActivity()">
-    <!-- 导航栏 -->
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="/welcome/" style="font-size:2.5em">HangOut</a>
-        </div>
-        <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
-        <a class="navbar-brand navbar-right" href="/logout/" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
-        <a class="navbar-brand navbar-right" href="/my_request/" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
-        <a class="navbar-brand navbar-right" href="/welcome/" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
-    </nav>
-
-    <!-- 工具栏 -->
-    <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
-        <div class="row">
-            <div class="col-lg-2 col-sm-2" style="padding-left:20px">
-                <ul class="nav nav-tabs">
-                    <li class="nav-header">Personal</li>
-                    <li><a href="/change_userinfo/"><span class="fa fa-pencil"></span>Profile</a></li>
-                    <li><a href="/change_userpwd/"><span class="fa fa-lock"></span>Password</a></li>
-                    <li class="nav-header">Social</li>
-                    <li><a href="/my_friends/"><span class="fa fa-user"></span>My Friends</a></li>
-                    <li><a href="/my_groups/create/"><span class="fa fa-group"></span>My Groups</a></li>
-                    <li><a href="/add_group/"><span class="fa fa-user-plus"></span>Create Group</a></li>
-                    <li><a href="/all_groups/"><span class="fa fa-globe"></span>All Groups</a></li>
-                    <li class="divider"></li>
-                    <li class="nav-header">Activity</li>
-                    <li><a href="/add_activity/"><span class="fa fa-plus"></span>Create Activity</a></li>
-                    <li><a href="/my_activities/attend/"><span class="fa fa-comment"></span>My Activities</a></li>
-                    <li><a href="/friend_activities/attend/"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
-                    <li><a href="/my_group_activities/"><span class="fa fa-comments-o"></span>Group Activities</a></li>
-                    <li><a href="/all_activities/"><span class="fa fa-globe"></span>All Activities</a></li>
-                    <li class="divider"></li>
-                </ul>
-            </div>
-
-
-
-            <div class="col-lg-7 col-lg-offset-1">
-                <h2>Activity List</h2>
-                <div><h1 id="placeholder">Placeholder</h1></div>
-                <form class="form-horizontal" action="" method="post">
-                    <input type="hidden" name="form_type" value="search" />
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Type:</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline"><input type="checkbox" name="all_type" checked/>All</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="1" />Movie</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="2" />Sports</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="3" />Party</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="4" />Meal</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="5" />Academic</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Time:</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline"><input type="checkbox" name="all_time" checked/>All</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_week" />In one week</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_month" />In one month</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_three_months" />In three month</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_half_year" />In half a year</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_year" />In a year</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Keyword:</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" type="text" name="keywords" />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-md btn-primary col-lg-offset-2">Search</button>
-                </form>
-
-                <!--{% include "search_activity.html" %}-->
-
-                    <div class="col-lg-10" style="top:15px">
-                        <!-- {% for activity in activities %} -->
-                        <div class="list-group" style="width:30%;position:relative;float:left;padding-right:5px;padding-left:5px">
-                            <div style="width:100%;position:relative;float:left;">
-                                <a href="/activity_detail/{{ activity.id }}/"><div>
-                                    <img style="width:100%;height:250px;" src="staticfiles/img/0.jpg"/>
-                                </div></a>
-                                <a href="/activity_detail/{{ activity.id }}/" class="list-group-item active">
-                                    <h4 class="list-group-item-heading">Activity Name</h4>
-                                    <h5 class="list-group-item-heading">mm/dd/yyyy hh:mm</h5>
-                                </a>
-                                <div class="list-group-item">
-                                    <h4 class="list-group-item-heading">
-                                        <span class="glyphicon glyphicon-map-marker" aria-hidden:true></span>Place</h4>
-                                    <p class="list-group-item-text">Description</p>
-                                </div>
-                                <!-- {% if activity.status == "already_in" %} -->
-                                     <!-- <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">已参加</button> -->
-                                <!-- {% endif %} -->
-                                <!-- {% if activity.status == "expired" %} -->
-                                     <!-- <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">已过期</button> -->
-                                <!-- {% endif %} -->
-                                <!-- {% if activity.status == "available" %} -->
-                                <form role="form" method="post" action="">
-                                    <input type="hidden" name="activity_id" value={{activity.id}} />
-                                    <input type="hidden" name="form_type" value="apply_activity" />
-                                    <button type="submit" class="btn btn-md btn-danger pull-right" style="position:relative;top:4px">Join</button>
-                                </form>
-                                <!-- {% endif %} -->
-                            </div>
-                        </div>
-                    <!-- {% endfor %} -->
-                    </div>
-               </div>
-
-        </div>
-    </div>
+<body onload="getActivities()">
+    <h1>Test Index</h1>
+    <h2>Current Activities</h2>
+    <div id="placeholder"></div>
+    <h2>New Activity</h2>
+    <form id="new-post-form"">
+        type<input type="text" name="type"><br>
+        name<input type="text" name="name"><br>
+        explanation<input type="text" name="explanation"><br>
+        organizer<input type="text" name="organizer"><br>
+        post_time<input type="date" name="post_time"><br>
+        applyend_time<input type="date" name="applyend_time"><br>
+        start_time<input type="date" name="start_time"><br>
+        end_time<input type="date" name="end_time"><br>
+        place<input type="text" name="place"><br>
+        location<input type="text" name="location"><br>
+        min_age<input type="number" name="min_age"><br>
+        max_age<input type="number" name="max_age"><br>
+        sex_requirement<input type="text" name="sex_requirement"><br>
+        status<input type="text" name="status"><br>
+        current_size<input type="number" name="current_size"><br>
+        max_size<input type="number" name="max_size"><br>
+        picture<input type="text" name="picture"><br>
+    </form>
+    <input type="button" value="Submit" onclick="postActivity()">
     <script type="text/javascript" src="staticfiles/js/script.js"></script>
 </body>
 </html>
