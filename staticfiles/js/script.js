@@ -13,6 +13,7 @@ function createNode(type, classes) {
 /******************** helper function ********************/
 
 function getActivities() {
+  // fetch(esEndpoint + composeQuery())
   fetch(esEndpoint + '_search')
     .then(function (res) {
       return res.json();
@@ -105,7 +106,7 @@ function deleteActivity(activityId) {
   fetch(esEndpoint + activityId, { method: "DELETE" })
     .then(function (res) {
       console.log(res);
-      getActivities();
+      // getActivities();
     })
     .catch(function (error) {
       console.log(error);
@@ -123,7 +124,7 @@ function postActivity() {
     })
     .then(function (res) {
       console.log(res);
-      if (res.statusText === 'Created') { getActivities(); }
+      // if (res.statusText === 'Created') { getActivities(); }
     })
     .catch(function (error) {
       console.log(error);
@@ -134,9 +135,17 @@ function composeNewActivity(elements) {
   var obj ={};
   for(var i = 0; i < elements.length ; ++i){
       var item = elements.item(i);
-      if (item.name !== '') {
+      if (item.name !== '' && item.value !== '') {
         obj[item.name] = item.value;
       }
   }
   return obj;
 }
+
+// function composeQuery() {
+//   var form = document.getElementById('search-form');
+//   var type = form.elements.type.value;
+//   var kw = form.elements.kw.value;
+
+//   return '_search?' + kw;
+// }
