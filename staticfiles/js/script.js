@@ -112,7 +112,7 @@ function deleteActivity(activityId) {
 }
 
 function postActivity() {
-  var form = document.getElementById('new-post-form');
+  var form = document.getElementById('new_activity');
   fetch(esEndpoint, {
     headers: { 'Content-Type': 'application/json' },
     method: "POST",
