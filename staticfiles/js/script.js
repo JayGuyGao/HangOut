@@ -1,4 +1,4 @@
-var esEndpoint = 'https://search-group6-activity-website-gv3gkyysjd5b7hnkji7hcmghzi.us-east-1.es.amazonaws.com/activities/activity/';
+var esEndpoint = 'https://search-group6-activity-website-gv3gkyysjd5b7hnkji7hcmghzi.us-east-1.es.amazonaws.com/activities_test/activity/';
 
 /******************** helper function ********************/
 
@@ -113,10 +113,12 @@ function deleteActivity(activityId) {
 
 function postActivity() {
   var form = document.getElementById('new_activity');
+  var activities = composeNewActivity(form.elements);
+  console.log(activities);
   fetch(esEndpoint, {
     headers: { 'Content-Type': 'application/json' },
     method: "POST",
-    body: JSON.stringify(composeNewActivity(form.elements))
+    body: JSON.stringify(activities)
     })
     .then(function (res) {
       console.log(res);
