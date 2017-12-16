@@ -90,6 +90,7 @@ function renderActivity(activity) {
   // joinButton
   var joinButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
   joinButton.textContent = 'Join';
+  joinButton.onclick = function() { deleteActivity(activity._id) };
 
   // add all div into frame
   [activityImgLink, activityNameLink, activityDesDiv, joinButton].forEach(function(child) {
