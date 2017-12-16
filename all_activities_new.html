@@ -14,7 +14,7 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'">
+<body style="font-family:'Microsoft YaHei'" onload="getActivities()">
     <!-- 导航栏 -->
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
@@ -66,7 +66,7 @@
                             <label class="checkbox-inline"><input type="checkbox" name="3" />Party</label>
                             <label class="checkbox-inline"><input type="checkbox" name="4" />Meal</label>
                             <label class="checkbox-inline"><input type="checkbox" name="5" />Academic</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="6" />Others</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="6" />Academic</label>
                         </div>
                     </div>
 
@@ -92,21 +92,23 @@
                 </form>
 
                 <!--{% include "search_activity.html" %}-->
-                
-                    <div class="col-lg-10" style="top:15px">
+
+                    <div id="activities-frame" class="col-lg-10" style="top:15px">
                         <!-- {% for activity in activities %} -->
                         <div class="list-group">
                             <div class="sub-list-group">
-                                <a href="/activity_detail/{{ activity.id }}/"><div>
+                                <a href="/activity_detail/{{ activity.id }}/">
                                     <img class="activity-img" src="staticfiles/img/0.jpg"/>
-                                </div></a>
+                                </a>
+
                                 <a href="/activity_detail/{{ activity.id }}/" class="list-group-item active">
                                     <h4 class="list-group-item-heading">Activity Name</h4>
                                     <h5 class="list-group-item-heading">mm/dd/yyyy hh:mm</h5>
                                 </a>
                                 <div class="list-group-item">
                                     <h4 class="list-group-item-heading">
-                                        <span class="glyphicon glyphicon-map-marker" aria-hidden=true></span>Place</h4>
+                                        <span class="glyphicon glyphicon-map-marker" aria-hidden=true></span>Place
+                                    </h4>
                                     <p class="list-group-item-text">Description</p>
                                 </div>
                                 <!-- {% if activity.status == "already_in" %} -->
@@ -135,5 +137,6 @@
             alert(1);
         }
     </script>
+    <script type="text/javascript" src="staticfiles/js/script.js"></script>
 </body>
 </html>
