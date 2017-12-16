@@ -165,7 +165,7 @@
                                 Location:
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="place" placeholder="请输入活动地点" {% if place %} value="{{place}}" {% endif %}
+                                <input type="text" class="form-control" name="place" placeholder="Please enter location" {% if place %} value="{{place}}" {% endif %}
                                 />
                                 <!-- {% if errors.place %}
                                 {{errors.place}}
@@ -252,7 +252,7 @@
                                 Max size:
                             </label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="max_size" {% if max_size %} placeholder="请输入人数限制" value="{{max_size}}" {% endif %}>
+                                <input type="text" class="form-control" name="max_size" {% if max_size %} placeholder="" value="{{max_size}}" {% endif %}>
                                 <!-- {% if errors.max_size %}
                                 {{errors.max_size}}
                                 {% endif %} -->
@@ -277,8 +277,12 @@
                             <label for="upload" class="col-sm-3 control-label">
                                 Upload picture:
                             </label>
-                            <div class="col-sm-9 form-inline">
-                                <input id="group_picture" type="file" name="image">
+                            <!-- <div class="col-sm-9 form-inline"> -->
+                                <!-- <input id="group_picture" type="file" name="image"> -->
+                            <!-- </div> -->
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="image" placeholder="Please enter url" {% if url %} value="{{url}}" {% endif %}
+                                />
                             </div>
                         </div>
 
