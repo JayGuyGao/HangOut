@@ -3,7 +3,6 @@ import botocore.exceptions as err
 
 
 def lambda_handler(event, context):
-    # TODO implement
     idp_client = boto3.client('cognito-idp')
     if event['new_pass'] != event['new_pass2']:
         return {'Error': 'DiffException'}
