@@ -14,38 +14,33 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'" onload="getActivities()">
-    <!-- 导航栏 -->
+<body style="font-family:'Microsoft YaHei'" onload="getActivities();getUser()">
+
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="/welcome/" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
-        <a class="navbar-brand navbar-right" href="/logout/" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
-        <a class="navbar-brand navbar-right" href="/my_request/" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
-        <a class="navbar-brand navbar-right" href="/welcome/" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
+        <a class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/login_form.html" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
+        <a class="navbar-brand navbar-right" href="#" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
+        <a id="show-username" class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
     </nav>
 
-    <!-- 工具栏 -->
     <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
         <div class="row">
             <div class="col-lg-2 col-sm-2" style="padding-left:20px">
                 <ul class="nav nav-tabs">
                     <li class="nav-header">Personal</li>
-                    <li><a href="/change_userinfo/"><span class="fa fa-pencil"></span>Profile</a></li>
-                    <li><a href="/change_userpwd/"><span class="fa fa-lock"></span>Password</a></li>
+                    <li><a href="#"><span class="fa fa-pencil"></span>Profile</a></li>
+                    <li><a href="#"><span class="fa fa-lock"></span>Password</a></li>
                     <li class="nav-header">Social</li>
                     <li><a href="/my_friends/"><span class="fa fa-user"></span>My Friends</a></li>
-                    <li><a href="/my_groups/create/"><span class="fa fa-group"></span>My Groups</a></li>
-                    <li><a href="/add_group/"><span class="fa fa-user-plus"></span>Create Group</a></li>
-                    <li><a href="/all_groups/"><span class="fa fa-globe"></span>All Groups</a></li>
                     <li class="divider"></li>
                     <li class="nav-header">Activity</li>
-                    <li><a href="/add_activity/"><span class="fa fa-plus"></span>Create Activity</a></li>
-                    <li><a href="/my_activities/attend/"><span class="fa fa-comment"></span>My Activities</a></li>
-                    <li><a href="/friend_activities/attend/"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
-                    <li><a href="/my_group_activities/"><span class="fa fa-comments-o"></span>Group Activities</a></li>
-                    <li><a href="/all_activities/"><span class="fa fa-globe"></span>All Activities</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/add_activity.html"><span class="fa fa-plus"></span>Create Activity</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/my_activities_attend.html"><span class="fa fa-comment"></span>My Activities</a></li>
+                    <li><a href="#"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html"><span class="fa fa-globe"></span>All Activities</a></li>
                     <li class="divider"></li>
                 </ul>
             </div>

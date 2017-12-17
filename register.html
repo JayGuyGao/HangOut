@@ -26,7 +26,7 @@
                <label for="username" class="col-sm-4 control-label">Account</label>
                <div class="col-sm-7">
                   <input id="username" type="text" class="form-control" name="account" 
-                     placeholder="请输入帐号" {% if account %} value="{{ account }}" {% endif %}>
+                     placeholder="Please enter account" {% if account %} value="{{ account }}" {% endif %}>
                </div>
             </div>
 
@@ -34,7 +34,7 @@
                <label for="password" class="col-sm-4 control-label">Password</label>
                <div class="col-sm-7">
                   <input id="password" type="password" class="form-control" name="password1" 
-                     placeholder="请输入密码" {% if password1 %} value="{{ password1 }}" {% endif %}>
+                     placeholder="Please enter password" {% if password1 %} value="{{ password1 }}" {% endif %}>
                    {% if errors.password1 %}
                         {{errors.password1}}
                    {% endif %}
@@ -45,7 +45,7 @@
                <label for="password" class="col-sm-4 control-label">Repeat Password</label>
                <div class="col-sm-7">
                   <input id="password2" type="password" class="form-control" name="password2" 
-                     placeholder="请再次输入密码" {% if password2 %} value="{{ password2 }}" {% endif %}>
+                     placeholder="Please repeat password" {% if password2 %} value="{{ password2 }}" {% endif %}>
                    {% if errors.password2 %}
                         {{errors.password2}}
                    {% endif %}
@@ -129,7 +129,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
-                    alert(data);
+                    location.href = 'https://s3.amazonaws.com/group6-activity-website/register_success.html';
                 },
                 data: JSON.stringify(info),
             });

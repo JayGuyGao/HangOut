@@ -14,32 +14,29 @@
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
 <body style="font-family:'Microsoft YaHei'">
-    <!-- 导航栏 -->
+
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="/welcome/" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="#" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
     </nav>
 
-    <!-- 工具栏 -->
     <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
 	
 	<div style="width:100%;height:100%;position:fixed;z-index: 8886;top: 0px;left: 0px;background: skyblue;filter: alpha(Opacity=30); -moz-opacity:0.30;opacity:0.30;">
 	</div>
 	<div style="z-index: 88888;width:50%;height:50%;position:fixed;top:25%;left:25%;background-color:white;font-size:2em;text-align:center;padding-top:5%;border-radius:10px">
-	Register success! You will login after <div id="time" style="font-size:3em"></div> or click <a href="/login/">here</a> to login immediately.</div>
+	Register success! You will login after <div id="time" style="font-size:3em"></div> or click <a href="https://s3.amazonaws.com/group6-activity-website/login_form.html">here</a> to login immediately.</div>
 	
 	<script language="javascript" type="text/javascript">
-		var t = 6;  
-	//显示倒数秒数  
+		var t = 6;
 	function showTime(){  
 		t -= 1;  
 		document.getElementById('time').innerHTML= t + 's';  
 		if(t==0){  
-			location.href='/login/';  
+			location.href='https://s3.amazonaws.com/group6-activity-website/login_form.html';  
 		}  
-		//每秒执行一次,showTime()  
 		setTimeout("showTime()",1000);  
 	}  
 	showTime();

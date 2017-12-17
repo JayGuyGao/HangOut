@@ -11,6 +11,14 @@ function createNode(type, classes) {
 }
 
 /******************** helper function ********************/
+function getUser() {
+  var accessToken = localStorage.getItem('hangout_accesstoken');
+  var idToken = localStorage.getItem('hangout_accesstoken');
+  var refreshToken = localStorage.getItem('hangout_refreshtoken');
+  var account = localStorage.getItem('hangout_account');
+  console.log('Account:' + account);
+  $('#show-username').html('<span class="fa fa-user"></span>' + account);
+}
 
 function getActivities() {
   fetch(esEndpoint + '_search')
@@ -140,5 +148,7 @@ function composeNewActivity(elements) {
   }
   return obj;
 }
+
+
 
 
