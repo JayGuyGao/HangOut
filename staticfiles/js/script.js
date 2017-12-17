@@ -12,6 +12,32 @@ function createNode(type, classes) {
 }
 
 /******************** helper function ********************/
+function joinAct(act_id) {
+  var info = {
+    username: localStorage.getItem('hangout_account'),
+    token: localStorage.getItem('hangout_accesstoken'),
+    act_id: act_id,
+  }
+  $.ajax({
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/join',
+        type: 'post',
+        dataType: 'json',
+        contentType: "application/json",
+        headers: {'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('hangout_idtoken'),
+                },
+        data: JSON.stringify(info),
+        success: function (data) {
+            console.log(data);
+            if (data.Error) {
+              alert(data.Error);
+            }
+            else {
+              alert('Join success!');
+            }
+        },
+    })
+}
 function getUser() {
   var accessToken = localStorage.getItem('hangout_accesstoken');
   var idToken = localStorage.getItem('hangout_idtoken');
@@ -174,7 +200,7 @@ function renderActivity(activity) {
   // joinButton
   var joinButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
   joinButton.textContent = 'Join';
-  joinButton.onclick = function() { deleteActivity(activity._id) };
+  joinButton.onclick = function() { joinAct(activity._id) };
 
   // add all div into frame
   [activityImgLink, activityNameLink, activityDesDiv, joinButton].forEach(function(child) {
@@ -197,6 +223,7 @@ function deleteActivity(activityId) {
 }
 
 function postActivity() {
+  $('input[type="submit"]').attr('disabled', true);
   var form = document.getElementById('new_activity');
   var activities = composeNewActivity(form.elements);
   console.log(activities);
@@ -206,10 +233,12 @@ function postActivity() {
     body: JSON.stringify(activities)
     })
     .then(function (res) {
+      $('input[type="submit"]').attr('disabled', false);
       console.log(res);
       // if (res.statusText === 'Created') { getActivities(); }
     })
     .catch(function (error) {
+      $('input[type="submit"]').attr('disabled', false);
       console.log(error);
     });
 }
@@ -295,9 +324,9 @@ function renderMyAct(act) {
 
     var actLinkNode = createNode('a', ['list-group-item', 'active']);
     actLinkNode.setAttribute('href', '/activity_detail/' + act.id);
-    var actNameNode = createNode('h4', 'list-group-item-heading');
+    var actNameNode = createNode('h4', ['list-group-item-heading']);
     actNameNode.innerHTML = act.name;
-    var actTimeNode = createNode('h5', 'list-group-item-heading');
+    var actTimeNode = createNode('h5', ['list-group-item-heading']);
     actTimeNode.innerHTML = act.start_time;
     actLinkNode.appendChild(actNameNode);
     actLinkNode.appendChild(actTimeNode);

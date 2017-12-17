@@ -63,6 +63,7 @@
     </div>
     <script>
         function Login() {
+          $('input[type="submit"]').attr('disabled', true);
           var info = {
                 username: $("#username").val(),
                 password: $("#password").val(),
@@ -79,6 +80,7 @@
                 success: function (data) {
                     //alert(data.msg);
                     console.log(data);
+                    $('input[type="submit"]').attr('disabled', false);
                     if (data.Error) {
                       if (data.Error == 'UserNotFoundException') {
                         alert('User not found');

@@ -51,7 +51,7 @@
 
             <div class="col-lg-7 col-lg-offset-1">
                 <h2>Activity List</h2>
-                <form id="search-form">
+                <!-- <form id="search-form">
                     Type:
                     <input type="radio" name="type" value="0" checked="checked">All
                     <input type="radio" name="type" value="1">Movie
@@ -65,43 +65,31 @@
                     Keyword:
                     <input type="text" name="kw" />
                 </form>
-                <button onclick="getActivities()" class="btn btn-md btn-primary col-lg-offset-2">Search</button>
+                <button onclick="getActivities()" class="btn btn-md btn-primary col-lg-offset-2">Search</button> -->
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" >
                     <input type="hidden" name="form_type" value="search" />
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Type:</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline"><input type="checkbox" name="all_type" checked/>All</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="1" />Movie</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="2" />Sports</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="3" />Party</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="4" />Meal</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="5" />Academic</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="6" />Ohters</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Time:</label>
-                        <div class="col-sm-10">
-                            <label class="checkbox-inline"><input type="checkbox" name="all_time" checked/>All</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_week" />In one week</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_month" />In one month</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_three_months" />In three month</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_half_year" />In half a year</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="within_one_year" />In a year</label>
+                        <div class="col-sm-10" id="search-form">
+                            <label class="checkbox-inline"><input type="radio" value="0" checked/>All</label>
+                            <label class="checkbox-inline"><input type="radio" value="1" />Movie</label>
+                            <label class="checkbox-inline"><input type="radio" value="2" />Sports</label>
+                            <label class="checkbox-inline"><input type="radio" value="3" />Party</label>
+                            <label class="checkbox-inline"><input type="radio" value="4" />Meal</label>
+                            <label class="checkbox-inline"><input type="radio" value="5" />Academic</label>
+                            <label class="checkbox-inline"><input type="radio" value="6" />Ohters</label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Keyword:</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" type="text" name="keywords" />
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="kw" />
                         </div>
                     </div>
-                    <button onclick="myfunc();" type="" class="btn btn-md btn-primary col-lg-offset-2">Search</button>
                 </form>
+                <button onclick="getActivities()" type="" class="btn btn-md btn-primary col-sm-12">Search</button>
 
                 <!--{% include "search_activity.html" %}-->
 

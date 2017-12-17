@@ -90,10 +90,11 @@
 
     <script>
         function registerUser() {
-	  var gen = "male";
-	  if (document.getElementById("female")) {
-	      gen = "female";
-	  }
+          $('input[type="submit"]').attr('disabled', true);
+        	  var gen = "male";
+        	  if (document.getElementById("female")) {
+        	      gen = "female";
+        	  }
           var info = {
                 username: $("#username").val(),
                 password: $("#password").val(),
@@ -112,6 +113,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
+                    $('input[type="submit"]').attr('disabled', false);
                     location.href = 'https://s3.amazonaws.com/group6-activity-website/register_success.html';
                 },
                 data: JSON.stringify(info),
