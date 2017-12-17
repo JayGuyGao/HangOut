@@ -295,14 +295,12 @@ function getMyCrtActs() {
         token: localStorage.getItem('hangout_accesstoken'),
     }
     $.ajax({
-        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/profile',
-        type: 'put',
-        dataType: 'json',
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/launch',
+        type: 'get',
         contentType: "application/json",
         headers: {
                 'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
-        data: JSON.stringify(info),
         success: function (data) {
             console.log(data);
             renderMyActs(data.activities);
@@ -323,11 +321,11 @@ function renderMyAct(act) {
     node.appendChild(divNode);
 
     var actLinkNode = createNode('a', ['col-lg-10', 'list-group-item', 'active']);
-    actLinkNode.setAttribute('href', '/activity_detail/' + act.id);
+    actLinkNode.setAttribute('href', 'activity_detail.html?q=' + act.id);
     var actNameNode = createNode('h4', ['list-group-item-heading']);
     actNameNode.innerHTML = act.name;
     var actTimeNode = createNode('h5', ['list-group-item-heading']);
-    actTimeNode.innerHTML = act.start_time;
+    actTimeNode.innerHTML = act.start_date + ' ' + act.start_time;
     actLinkNode.appendChild(actNameNode);
     actLinkNode.appendChild(actTimeNode);
     divNode.appendChild(actLinkNode);
