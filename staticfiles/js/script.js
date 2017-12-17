@@ -27,7 +27,11 @@ function logout() {
 
 function getActivities() {
   // fetch(esEndpoint + composeQuery())
-  fetch(esEndpoint + '_search')
+  console.log(composeQuery());
+  fetch(esEndpoint + '_search' + composeQuery(), {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET'
+  })
     .then(function (res) {
       return res.json();
     })
@@ -155,15 +159,15 @@ function composeNewActivity(elements) {
   return obj;
 }
 
-// function composeQuery() {
-//   var form = document.getElementById('search-form');
-//   var type = form.elements.type.value;
-//   var kw = form.elements.kw.value;
+function composeQuery() {
+  var form = document.getElementById('search-form');
+  var type = form.elements.type.value;
+  var kw = form.elements.kw.value;
 
-<<<<<<< HEAD
-//   return '_search?' + kw;
-// }
-=======
-
-
->>>>>>> 4c6eb749d9be72b6ca3008e602728e0ce80c7efa
+  var ret = '';
+  ret += kw === ''? '' : '(' + kw + ')';
+  if (type !== '0') {
+    ret += (ret.length > 0 ? 'AND' : '') + '(type:' + type + ')';
+  }
+  return ret.length > 0? '?q=' + ret : ret;
+}
