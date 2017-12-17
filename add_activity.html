@@ -232,7 +232,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sex_requirement" class="col-sm-3 control-label">
-                                Sex requirement:
+                                Gender requirement:
                             </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="sel1" name="sex_requirement">
@@ -250,10 +250,10 @@
                         </div>
                         <div class="form-group">
                             <label for="max_size" class="col-sm-3 control-label">
-                                Max size:
+                                Maximum number of participants:
                             </label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="max_size" {% if max_size %} placeholder="" value="{{max_size}}" {% endif %}>
+                                <input type="number" class="form-control" name="max_size" {% if max_size %} placeholder="" value="{{max_size}}" {% endif %}>
                                 <!-- {% if errors.max_size %}
                                 {{errors.max_size}}
                                 {% endif %} -->
@@ -261,7 +261,7 @@
                         </div>
                         <div class="form-group">
                             <label for="status" class="col-sm-3 control-label">
-                                Status:
+                                Activity status:
                             </label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="sel1" name="status">

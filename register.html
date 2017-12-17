@@ -5,8 +5,11 @@
   <title>HangOut</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="staticfiles/js/jquery.js"></script>
+    <script type="text/javascript" src="staticfiles/js/script.js"></script>
     <link href="staticfiles/css/bootstrap.min.css" rel="stylesheet" media="screen">
 </head>
+
+
 <body style="font-family:'Microsoft YaHei'">
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
@@ -18,22 +21,19 @@
     </nav>
 
     <div class="container" style="width:50%;border:2px solid skyblue;padding:15px 10px 8px 20px;">
-        <form class="form-horizontal" role="form" method="post" action="">
+        <form class="form-horizontal" role="form">
             <div class="form-group">
-               <label for="email" class="col-sm-4 control-label">Account</label>
+               <label for="username" class="col-sm-4 control-label">Account</label>
                <div class="col-sm-7">
-                  <input type="text" class="form-control" name="account" 
+                  <input id="username" type="text" class="form-control" name="account" 
                      placeholder="请输入帐号" {% if account %} value="{{ account }}" {% endif %}>
-                   {% if errors.account %}
-                        {{errors.account}}
-                   {% endif %}
                </div>
             </div>
 
             <div class="form-group">
                <label for="password" class="col-sm-4 control-label">Password</label>
                <div class="col-sm-7">
-                  <input type="password" class="form-control" name="password1" 
+                  <input id="password" type="password" class="form-control" name="password1" 
                      placeholder="请输入密码" {% if password1 %} value="{{ password1 }}" {% endif %}>
                    {% if errors.password1 %}
                         {{errors.password1}}
@@ -44,7 +44,7 @@
             <div class="form-group">
                <label for="password" class="col-sm-4 control-label">Repeat Password</label>
                <div class="col-sm-7">
-                  <input type="password" class="form-control" name="password2" 
+                  <input id="password2" type="password" class="form-control" name="password2" 
                      placeholder="请再次输入密码" {% if password2 %} value="{{ password2 }}" {% endif %}>
                    {% if errors.password2 %}
                         {{errors.password2}}
@@ -99,19 +99,42 @@
             <div class="form-group">
                 <label for="tel" class="col-sm-4 control-label">Email</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" name="email" {% if email %} value="{{ email }}" {% endif %}>
+                    <input id="email" type="text" class="form-control" name="email" {% if email %} value="{{ email }}" {% endif %}>
                    {% if errors.email %}
                         {{errors.email}}
                    {% endif %}
                 </div>
             </div>
 
+
+        </form>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" onclick="registerUser()" value="Submit">
                 </div>
             </div>
-        </form>
+
+    <script>
+        function registerUser() {
+          var info = {
+                username: $("#username").val(),
+                password: $("#password").val(),
+            };
+
+            console.log(JSON.stringify(info));
+
+            $.ajax({
+                url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/register',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    alert(data);
+                },
+                data: JSON.stringify(info),
+            });
+        }
+    </script>
 
     </div>
 </body>
