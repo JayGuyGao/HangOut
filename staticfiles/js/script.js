@@ -273,14 +273,14 @@ function getMyAttActs() {
         token: localStorage.getItem('hangout_accesstoken'),
     }
     $.ajax({
-        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/profile',
-        type: 'put',
-        dataType: 'json',
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/attend',
+        type: 'get',
+        //dataType: 'json',
         contentType: "application/json",
-        headers: {'Content-Type': 'application/json',
+        headers: {
                 'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
-        data: JSON.stringify(info),
+        //data: JSON.stringify(info),
         success: function (data) {
             console.log(data);
             renderMyActs(data.activities);
@@ -299,7 +299,7 @@ function getMyCrtActs() {
         type: 'put',
         dataType: 'json',
         contentType: "application/json",
-        headers: {'Content-Type': 'application/json',
+        headers: {
                 'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
         data: JSON.stringify(info),
