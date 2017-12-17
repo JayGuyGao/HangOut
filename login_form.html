@@ -36,7 +36,7 @@
                        <label for="email" class="col-sm-2 control-label">Account</label>
                        <div class="col-sm-10">
                           <input id="username" type="text" class="form-control" id="email" name="account"
-                             placeholder="请输入帐号" value="">
+                             placeholder="Please enter an email as username" value="">
                    <!-- {% if errors.account %}
                         {{errors.account}}
                    {% endif %} -->
@@ -63,6 +63,7 @@
     </div>
     <script>
         function Login() {
+          $('input[type="submit"]').attr('disabled', true);
           var info = {
                 username: $("#username").val(),
                 password: $("#password").val(),
@@ -79,6 +80,7 @@
                 success: function (data) {
                     //alert(data.msg);
                     console.log(data);
+                    $('input[type="submit"]').attr('disabled', false);
                     if (data.Error) {
                       if (data.Error == 'UserNotFoundException') {
                         alert('User not found');
@@ -96,10 +98,12 @@
                       return;
                     }
 
-                    var res = data.user.AuthenticationResult;
-                    localStorage.setItem('hangout_accesstoken', res.AccessToken);
-                    localStorage.setItem('hangout_idtoken', res.IdToken);
-                    localStorage.setItem('hangout_refreshtoken', res.RefreshToken);
+                    var user = data.user.AuthenticationResult;
+                    var res = data.res;
+                    localStorage.setItem('hangout_accesstoken', user.AccessToken);
+                    localStorage.setItem('hangout_idtoken', user.IdToken);
+                    localStorage.setItem('hangout_refreshtoken', user.RefreshToken);
+                    localStorage.setItem('hangout_id', res.id);
                     console.log('done');
                     location.href = 'https://s3.amazonaws.com/group6-activity-website/all_activities_new.html';
                 },

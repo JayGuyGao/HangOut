@@ -15,7 +15,7 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'" onload="getUser()">
+<body style="font-family:'Microsoft YaHei'" onload="getUser();fillInfo()">
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
@@ -65,7 +65,7 @@
             </div>
 
             <div class="form-group">
-                <label for="sex" class="col-sm-4 control-label">Sex</label>
+                <label for="sex" class="col-sm-4 control-label">Gender</label>
                 <div class="col-sm-8">
                     <label class="checkbox-inline">
                        <input type="radio" name="sex" id="male"
@@ -81,7 +81,7 @@
             <div class="form-group">
                 <label for="age" class="col-sm-4 control-label">Age</label>
                 <div class="col-sm-7">
-                    <input type="number" class="form-control" name="age" {% if age %} value="{{ age }}" {% endif %}>
+                    <input type="number" class="form-control" name="age">
                    <!-- {% if errors.age %}
                         {{errors.age}}
                    {% endif %} -->
@@ -98,26 +98,53 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="tel" class="col-sm-4 control-label">Email</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="email">
-                   <!-- {% if errors.email %}
-                        {{errors.email}}
-                   {% endif %} -->
-                </div>
-            </div>
                 </form>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" onclick="submitInfo()">
                         </div>
                     </div>
                 
             </div>
 		</div>
 
-
+        <script>
+            function submitInfo() {
+                var gender = 'male';
+                if ($("input[id='female']:checked").val()) {
+                    gender = 'female';
+                }
+                console.log(gender);
+                var info = {
+                    token: localStorage.getItem('hangout_accesstoken'),
+                    nickname: $("input[name='nickname']").val(),
+                    age: $("input[name='age']").val(),
+                    phone: $("input[name='phone']").val(),
+                    gender: gender,
+                }
+                console.log(JSON.stringify(info));
+                $.ajax({
+                    url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/profile',
+                    type: 'post',
+                    dataType: 'json',
+                    contentType: "application/json",
+                    headers: {'Content-Type': 'application/json',
+                            'Authorization': localStorage.getItem('hangout_idtoken'),
+                            },
+                    data: JSON.stringify(info),
+                    success: function (data) {
+                        //alert(data.msg);
+                        console.log(data);
+                        if (data.Error) {
+                            alert(data.Error);
+                        }
+                        else {
+                            alert('Profile changed!')
+                        }
+                    },
+                });
+                }
+        </script>
 
 
         </div>
