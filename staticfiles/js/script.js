@@ -13,7 +13,7 @@ function createNode(type, classes) {
 /******************** helper function ********************/
 function getUser() {
   var accessToken = localStorage.getItem('hangout_accesstoken');
-  var idToken = localStorage.getItem('hangout_accesstoken');
+  var idToken = localStorage.getItem('hangout_idtoken');
   var refreshToken = localStorage.getItem('hangout_refreshtoken');
   var account = localStorage.getItem('hangout_account');
   console.log('Account:' + account);
@@ -21,7 +21,10 @@ function getUser() {
 }
 
 function logout() {
-  alert('logout');
+  localStorage.removeItem('hangout_accesstoken');
+  localStorage.removeItem('hangout_idtoken');
+  localStorage.removeItem('hangout_refreshtoken');
+  localStorage.removeItem('hangout_account');
   location.href = 'https://s3.amazonaws.com/group6-activity-website/login_form.html';
 }
 

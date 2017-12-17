@@ -49,7 +49,7 @@
             <div class="form-group">
                 <label for="nickname" class="col-sm-4 control-label">Nickname</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" name="nickname" value="">
+                    <input id="nickname" type="text" class="form-control" name="nickname" value="">
                 </div>
             </div>
 
@@ -70,24 +70,16 @@
             <div class="form-group">
                 <label for="age" class="col-sm-4 control-label">Age</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" name="age" value="">
+                    <input id="age" type="text" class="form-control" name="age" value="">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="tel" class="col-sm-4 control-label">Phone</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" name="phone" value="">
+                    <input id="phone" type="text" class="form-control" name="phone" value="">
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="tel" class="col-sm-4 control-label">Email</label>
-                <div class="col-sm-7">
-                    <input id="email" type="text" class="form-control" name="email" value="">
-                </div>
-            </div>
-
 
         </form>
             <div class="row">
@@ -98,9 +90,18 @@
 
     <script>
         function registerUser() {
+	  var gen = "male";
+	  if (document.getElementById("female")) {
+	      gen = "female";
+	  }
           var info = {
                 username: $("#username").val(),
                 password: $("#password").val(),
+		password2: $("#password2").val(),
+		nickname: $("#nickname").val(),
+		gender: gen,
+		phone: $("#phone").val(),
+		age: $("#age").val(),
             };
 
             console.log(JSON.stringify(info));
