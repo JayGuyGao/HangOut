@@ -47,57 +47,59 @@
             </div>
 
 
-
-
-                <div class="col-lg-7 col-lg-offset-1">
-                <h2>My Activities</h2>
-                    <ul class="nav nav-pills"> 
-                    <li class="active"><a href="#">Activities which I joined</a></li>
-                    <li><a href="https://s3.amazonaws.com/group6-activity-website/my_activities_launch.html">Activities which I launched</a></li>      
-                    </ul>
-
-                    <div class="col-lg-10 input-group" style="padding-top:15px">
-                        <form method="post" action="">
-                            <div class="col-lg-10">
-                                <input type="hidden" name="form_type" value="search_activity" />
-                                <input type="text" class="form-control" placeholder="Search" name="search_word">
-                            </div>
-                            <span class="input-group-btn">
-                                <button class="btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                            </span>
-                        </form>
-                    </div>
-                <!-- {% for activity in my_attend_activities %} -->
-                    <div class="col-lg-10" style="top:15px">
-                        <div class="col-lg-10 list-group">
-                            <a href="/activity_detail/{{ activity.id }}/" class="list-group-item active">
-                                <h4 class="list-group-item-heading">{{activity.name}}</h4>
-                                <h5 class="list-group-item-heading">mm/dd/yyyy hh:mm</h5>
-                            </a>
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">
-                                    <span class="glyphicon glyphicon-map-marker" aria-hidden:true></span>{{activity.place}}</h4>
-                                <p class="list-group-item-text">{{activity.explanation}}</p>
-                            </div>
-                            <!-- {% if activity.status == "already_in" %} -->
-                                 <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">Joined</button>
-                            <!-- {% endif %} -->
-                            <!-- {% if activity.status == "expired" %}
-                                 <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">Expired</button>
-                            {% endif %}
-                            {% if activity.status == "available" %}
-                            <form role="form" method="post" action="">
-                                <input type="hidden" name="activity_id" value={{activity.id}} />
-                                <input type="hidden" name="form_type" value="apply_activity" />
-                                <button type="submit" class="btn btn-md btn-danger pull-right" style="position:relative;top:4px">Apply</button>
-                            </form> -->
-                            <!-- {% endif %} -->
-                        </div>
-                    </div>
-                <!-- {% endfor %} -->
-                </div>
-
-
+                <div class="col-lg-7 col-lg-offset-1 col-sm-8">
+                	<h2>{{tar.nickname}} 的个人档案</h2>
+                    <ul class="nav nav-pills">
+   					<li class="active"><a href="#">个人档案</a></li>
+                    <li><a href="/user_activities/{{ tar.id }}/">活动</a></li>
+                    <li><a href="/user_friends/{{ tar.id }}/">好友</a></li>
+   					<li><a href="/user_groups/{{ tar.id }}/">群组</a></li>
+                    <li><form role="form" method="post" action="">
+                        <input type="hidden" name="friend_id" value={{tar.id}} />
+                        <input type="hidden" name="form_type" value="add_friend" />
+                        <button type="submit" class="btn btn-md btn-danger pull-right" style="position:relative;top:4px">发送好友请求</button>
+                    </form></li>
+					</ul>
+                    <table class="table table-hover" style="font-family:'Microsoft YaHei';font-size:1.7em">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>头像</td>
+                                <td><img src="/{{tar.headImg}}" alt="Head Img" height="250" width="250"></td>
+                            <tr>
+                                <td>账号</td>
+                                <td>{{tar.account}}</td>
+                            </tr>
+                            <tr>
+                                <td>昵称</td>
+                                <td>{{tar.nickname}}</td>
+                            </tr>
+                            <tr>
+                                <td>性别</td>
+                                <td>{% if tar.sex == "male" %} 男 {% endif %}
+                                    {% if tar.sex == "female" %} 女 {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>兴趣</td>
+                                <td>{{tar.interest}}</td>
+                            </tr>
+                            <tr>
+                                <td>电话</td>
+                                <td>{{tar.phone}}</td>
+                            </tr>
+                            <tr>
+                                <td>邮箱</td>
+                                <td>{{tar.email}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
 
 
 

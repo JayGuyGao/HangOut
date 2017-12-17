@@ -5,47 +5,43 @@
     <title>HangOut</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="staticfiles/js/jquery.js"></script>
+    <script type="text/javascript" src="staticfiles/js/script.js"></script>
     <link href="staticfiles/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="staticfiles/css/font-awesome.min.css" rel="stylesheet">
+    <link href="staticfiles/css/css.css" rel="stylesheet">
     <link href="staticfiles/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" />
     <link href="staticfiles/css/left_nav.css" rel="stylesheet" />
     <link href="staticfiles/css/chat.css" rel="stylesheet" />
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
-    <script type="text/javascript" src="staticfiles/js/script.js"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'">
-    <!-- 导航栏 -->
+<body style="font-family:'Microsoft YaHei'" onload="getUser()">
+
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="/welcome/" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
-        <a class="navbar-brand navbar-right" href="/logout/" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
-        <a class="navbar-brand navbar-right" href="/my_request/" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
-        <a class="navbar-brand navbar-right" href="/welcome/" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
+        <a class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/login_form.html" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
+        <a class="navbar-brand navbar-right" href="#" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
+        <a id="show-username" class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
     </nav>
 
-    <!-- 工具栏 -->
     <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
         <div class="row">
             <div class="col-lg-2 col-sm-2" style="padding-left:20px">
                 <ul class="nav nav-tabs">
                     <li class="nav-header">Personal</li>
-                    <li><a href="/change_userinfo/"><span class="fa fa-pencil"></span>Profile</a></li>
-                    <li><a href="/change_userpwd/"><span class="fa fa-lock"></span>Password</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/change_userinfo_form.html"><span class="fa fa-pencil"></span>Profile</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/change_userpwd_form.html"><span class="fa fa-lock"></span>Password</a></li>
                     <li class="nav-header">Social</li>
                     <li><a href="/my_friends/"><span class="fa fa-user"></span>My Friends</a></li>
-                    <li><a href="/my_groups/create/"><span class="fa fa-group"></span>My Groups</a></li>
-                    <li><a href="/add_group/"><span class="fa fa-user-plus"></span>Create Group</a></li>
-                    <li><a href="/all_groups/"><span class="fa fa-globe"></span>All Groups</a></li>
                     <li class="divider"></li>
                     <li class="nav-header">Activity</li>
-                    <li><a href="/add_activity/"><span class="fa fa-plus"></span>Create Activity</a></li>
-                    <li><a href="/my_activities/attend/"><span class="fa fa-comment"></span>My Activities</a></li>
-                    <li><a href="/friend_activities/attend/"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
-                    <li><a href="/my_group_activities/"><span class="fa fa-comments-o"></span>Group Activities</a></li>
-                    <li><a href="/all_activities/"><span class="fa fa-globe"></span>All Activities</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/add_activity.html"><span class="fa fa-plus"></span>Create Activity</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/my_activities_attend.html"><span class="fa fa-comment"></span>My Activities</a></li>
+                    <li><a href="#"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html"><span class="fa fa-globe"></span>All Activities</a></li>
                     <li class="divider"></li>
                 </ul>
             </div>
@@ -53,9 +49,7 @@
 
 
             <div class="col-lg-7 col-sm-7">
-                <form id="new_activity" class="form-horizontal" role="form" method="post"
-                action="" onsubmit="return validate_form(this)" enctype="multipart/form-data">
-                <input type="hidden" name="redirect" value="youtube.com">
+                <form id="new_activity" class="form-horizontal" role="form" enctype="multipart/form-data">
                     <h2>
                         Create Activity
                     </h2>
@@ -64,7 +58,7 @@
                                 Activity name:
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="name" {% if name %} placeholder="Please enter name" value="{{name}}" {% endif %}>
+                                <input type="text" class="form-control" name="name" {% if name %} placeholder="Please enter name">
                             </div>
                         </div>
                         <div class="form-inline">
@@ -73,7 +67,7 @@
                             </label>
                             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy/mm/dd"
                             data-link-field="dtp_input1" data-link-format="yyyy-mm-dd" style="float:left;margin: 0 10px 0 0;">
-                                <input class="form-control" type="text" readonly="" name="start_date" {% if start_date %} value="{{start_date}}" {% endif %}
+                                <input class="form-control" type="text" readonly="" name="start_date"
                                 />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar">
@@ -83,7 +77,7 @@
                             <div class="input-group date form_time col-md-3" data-date="" data-date-format="hh:ii"
                             data-link-field="dtp_input2" data-link-format="hh:ii">
                                 <input class="form-control" size="16" type="text" readonly=""
-                                name="start_time" {% if start_time %} value="{{start_time}}" {% endif %}/>
+                                name="start_time" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time">
                                     </span>
@@ -104,7 +98,7 @@
                             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy/mm/dd"
                             data-link-field="dtp_input3" data-link-format="yyyy-mm-dd" style="float:left;margin: 0 10px 0 0;">
                                 <input class="form-control" type="text" readonly="" name="end_date"
-                                {% if end_date %} value="{{end_date}}" {% endif %}/>
+                                />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar">
                                     </span>
@@ -113,7 +107,7 @@
                             <div class="input-group date form_time col-md-3" data-date="" data-date-format="hh:ii"
                             data-link-field="dtp_input4" data-link-format="hh:ii">
                                 <input class="form-control" size="16" type="text" readonly=""
-                                name="end_time" {% if end_time %} value="{{end_time}}" {% endif %} />
+                                name="end_time" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time">
                                     </span>
@@ -135,7 +129,7 @@
                             </label>
                             <div class="input-group date form_date col-md-5" data-date="" data-date-format="yyyy/mm/dd"
                             data-link-field="dtp_input5" data-link-format="yyyy-mm-dd" style="float:left;margin: 0 10px 0 0;">
-                                <input class="form-control" type="text" readonly="" name="applyend_date" {% if applyend_date %} value="{{applyend_date}}" {% endif %}
+                                <input class="form-control" type="text" readonly="" name="applyend_date"
                                 />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar">
@@ -145,7 +139,7 @@
                             <div class="input-group date form_time col-md-3" data-date="" data-date-format="hh:ii"
                             data-link-field="dtp_input6" data-link-format="hh:ii">
                                 <input class="form-control" size="16" type="text" readonly=""
-                                name="applyend_time" {% if applyend_time %} value="{{applyend_time}}" {% endif %} />
+                                name="applyend_time"/>
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time">
                                     </span>
@@ -166,7 +160,7 @@
                                 Location:
                             </label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="place" placeholder="Please enter location" {% if place %} value="{{place}}" {% endif %}
+                                <input type="text" class="form-control" name="place" placeholder="Please enter location"
                                 />
                                 <!-- {% if errors.place %}
                                 {{errors.place}}
@@ -213,7 +207,7 @@
                                 Age requirement:
                             </label>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control" name="min_age" placeholder="Min age" {% if min_age %} value="{{min_age}}" {% endif %}
+                                <input type="number" class="form-control" name="min_age" placeholder="Min age" value=18
                                 />
                                 <!-- {% if errors.min_age %}
                                 {{errors.min_age}}
@@ -223,7 +217,7 @@
                                 <b>~</b>
                             </div>
                             <div class="col-sm-3">
-                                <input type="number" class="form-control" name="max_age" placeholder="Max age" {% if max_age %} value="{{max_age}}" {% endif %}
+                                <input type="number" class="form-control" name="max_age" placeholder="Max age" value=100
                                 />
                                 <!-- {% if errors.max_age %}
                                 {{errors.max_age}}
@@ -253,7 +247,7 @@
                                 Maximum number of participants:
                             </label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" name="max_size" {% if max_size %} placeholder="" value="{{max_size}}" {% endif %}>
+                                <input type="number" class="form-control" name="max_size" value=10>
                                 <!-- {% if errors.max_size %}
                                 {{errors.max_size}}
                                 {% endif %} -->
@@ -282,7 +276,7 @@
                                 <!-- <input id="group_picture" type="file" name="image"> -->
                             <!-- </div> -->
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="picture" placeholder="Please enter url" {% if url %} value="{{url}}" {% endif %}
+                                <input type="text" class="form-control" name="picture" placeholder="Please enter url"
                                 />
                             </div>
                         </div>

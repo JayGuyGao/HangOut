@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <title>HangOut</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="staticfiles/js/jquery.js"></script>
+    <script type="text/javascript" src="staticfiles/js/script.js"></script>
+    <link href="staticfiles/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="staticfiles/css/font-awesome.min.css" rel="stylesheet">
+    <link href="staticfiles/css/css.css" rel="stylesheet">
+    <link href="staticfiles/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen" />
+    <link href="staticfiles/css/left_nav.css" rel="stylesheet" />
+    <link href="staticfiles/css/chat.css" rel="stylesheet" />
+    <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
+</head>
+<body style="font-family:'Microsoft YaHei'" onload="getUser()">
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header navbar-static-top">
+            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
+        </div>
+        <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
+        <a class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/login_form.html" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
+        <a class="navbar-brand navbar-right" href="#" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
+        <a id="show-username" class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
+    </nav>
+
+    <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
+        <div class="row">
+            <div class="col-lg-2 col-sm-2" style="padding-left:20px">
+                <ul class="nav nav-tabs">
+                    <li class="nav-header">Personal</li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/change_userinfo_form.html"><span class="fa fa-pencil"></span>Profile</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/change_userpwd_form.html"><span class="fa fa-lock"></span>Password</a></li>
+                    <li class="nav-header">Social</li>
+                    <li><a href="/my_friends/"><span class="fa fa-user"></span>My Friends</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Activity</li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/add_activity.html"><span class="fa fa-plus"></span>Create Activity</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/my_activities_attend.html"><span class="fa fa-comment"></span>My Activities</a></li>
+                    <li><a href="#"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
+                    <li><a href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html"><span class="fa fa-globe"></span>All Activities</a></li>
+                    <li class="divider"></li>
+                </ul>
+            </div>
+
+
+
+
+
+		<div class="col-lg-6 col-lg-offset-1 col-sm-7" style="padding:1% 25px 1% 5%;border:2px solid skyblue">
+            <div class="col-lg-10 col-sm-8">
+                <form class="form-horizontal" role="form">
+                    <!-- {% csrf_token %} -->
+                    <div class="form-group">
+                       <label for="password" class="col-sm-5 control-label">Old password</label>
+                       <div class="col-sm-7">
+                          <input id="old_pass" type="password" class="form-control" name="old_password" 
+                             placeholder="Please enter old password">
+                           <!-- {% if errors.old_password %}
+                                {{errors.old_password}}
+                           {% endif %} -->
+                       </div>
+                    </div>
+
+                    <div class="form-group">
+                       <label for="password" class="col-sm-5 control-label">New password</label>
+                       <div class="col-sm-7">
+                          <input id="new_pass1" type="password" class="form-control" name="new_password1" 
+                             placeholder="Please enter new password">
+                           <!-- {% if errors.new_password1 %}
+                                {{errors.new_password1}}
+                           {% endif %} -->
+                       </div>
+                    </div>
+
+                    <div class="form-group">
+                       <label for="password" class="col-sm-5 control-label">Repeat new password</label>
+                       <div class="col-sm-7">
+                          <input id="new_pass2" type="password" class="form-control" name="new_password2" 
+                             placeholder="Please repeat new password">
+                           <!-- {% if errors.new_password2 %}
+                                {{errors.new_password2}}
+                           {% endif %} -->
+                       </div>
+                    </div>
+
+                </form>  
+
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" onclick="changeUserPwd()" />
+            </div>
+		</div>
+
+    <script>
+      function changeUserPwd() {
+        var info = {
+                username: localStorage.getItem('hangout_account'),
+                old_pass: $("#old_pass").val(),
+                new_pass: $("#new_pass1").val(),
+                new_pass2: $("#new_pass2").val(),
+                token: localStorage.getItem('hangout_accesstoken'),
+            };
+
+            console.log(JSON.stringify(info));
+            $.ajax({
+                url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/resetpass',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                headers: {'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('hangout_idtoken'),
+                        },
+                success: function (data) {
+                    //alert(data.msg);
+                    console.log(data);
+                    if (data.Error) {
+                      if (data.Error == 'UserNotFoundException') {
+                        alert('User not found');
+                        return;
+                      }
+                      if (data.Error == 'NotAuthorizedException') {
+                        alert('Incorrect password');
+                        return;
+                      }
+                      if (data.Error == 'TooManyRequestsException') {
+                        alert('Operation too frequently');
+                        return;
+                      }
+                      alert('Other errors');
+                      return;
+                    }
+                    alert('Success!');
+                },
+                data: JSON.stringify(info),
+            });
+            // fetch('https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/resetpass', {
+            //   headers: {'Content-Type': 'application/json',
+            //             'Authorization': localStorage.getItem('hangout_idtoken'),
+            //             },
+            //   method: "POST",
+            //   body: JSON.stringify(info)
+            //   })
+            //       .then(function (res) {
+            //         console.log(res);
+            //         console.log('GXD');
+            //       })
+            //       .catch(function (error) {
+            //         console.log(error);
+            //       });
+      }
+    </script>
+
+
+
+        </div>
+    </div>
+</body>
+</html>

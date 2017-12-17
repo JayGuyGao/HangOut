@@ -11,6 +11,19 @@ function createNode(type, classes) {
 }
 
 /******************** helper function ********************/
+function getUser() {
+  var accessToken = localStorage.getItem('hangout_accesstoken');
+  var idToken = localStorage.getItem('hangout_accesstoken');
+  var refreshToken = localStorage.getItem('hangout_refreshtoken');
+  var account = localStorage.getItem('hangout_account');
+  console.log('Account:' + account);
+  $('#show-username').html('<span class="fa fa-user"></span>' + account);
+}
+
+function logout() {
+  alert('logout');
+  location.href = 'https://s3.amazonaws.com/group6-activity-website/login_form.html';
+}
 
 function getActivities() {
   // fetch(esEndpoint + composeQuery())
@@ -147,5 +160,10 @@ function composeNewActivity(elements) {
 //   var type = form.elements.type.value;
 //   var kw = form.elements.kw.value;
 
+<<<<<<< HEAD
 //   return '_search?' + kw;
 // }
+=======
+
+
+>>>>>>> 4c6eb749d9be72b6ca3008e602728e0ce80c7efa

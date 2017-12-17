@@ -11,7 +11,7 @@
 <body style="font-family:'Microsoft YaHei'">
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="#" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
         <!--<a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">登录</a>
@@ -26,40 +26,86 @@
 
             <div class="col-sm-9 col-md-6 col-lg-4" style="border:2px solid skyblue">
                 <ul class="nav nav-tabs">
-                   <li class="active"><a href="/login/">Login</a></li>
-                   <li><a href="/register/">Register</a></li>
+                   <li class="active"><a href="#">Login</a></li>
+                   <li><a href="https://s3.amazonaws.com/group6-activity-website/register.html">Register</a></li>
                 </ul>
 
                <form id="user_login" class="form-horizontal" role="form" style="padding-top:5%" action="/login/" method="post">
-                   {% csrf_token %}
+                   <!-- {% csrf_token %} -->
                     <div class="form-group">
                        <label for="email" class="col-sm-2 control-label">Account</label>
                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="email" name="account"
-                             placeholder="请输入帐号" {% if account %} value="{{ account }}" {% endif %}>
-                   {% if errors.account %}
+                          <input id="username" type="text" class="form-control" id="email" name="account"
+                             placeholder="请输入帐号" value="">
+                   <!-- {% if errors.account %}
                         {{errors.account}}
-                   {% endif %}
+                   {% endif %} -->
                        </div>
                     </div>
                     <div class="form-group">
                        <label for="password" class="col-sm-2 control-label">Password</label>
                        <div class="col-sm-10">
-                          <input type="password" class="form-control" id="password" name="password"
-                             placeholder="Please enter password" {% if password1 %} value="{{ password1 }}" {% endif %}>
-                   {% if errors.password %}
+                          <input id="password" type="password" class="form-control" id="password" name="password"
+                             placeholder="Please enter password" value="">
+                   <!-- % {if errors.password %}
                         {{errors.password}}
-                   {% endif %}
-                       </div>
-                    </div>
-                    <div class="form-group">
-                       <div class="col-sm-offset-1 col-sm-10">
-                          <input type="submit" class="btn btn-primary btn-lg" value="Login">
+                   {% endif %} -->
                        </div>
                     </div>
                 </form>
+                    <div class="form-group">
+                       <div class="col-sm-offset-1 col-sm-10">
+                          <input type="submit" class="btn btn-primary btn-lg" value="Login" onclick="Login()">
+                       </div>
+                    </div>
             </div>
         </div>
     </div>
+    <script>
+        function Login() {
+          var info = {
+                username: $("#username").val(),
+                password: $("#password").val(),
+            };
+            localStorage.setItem('hangout_account', $("#username").val());
+
+            console.log(JSON.stringify(info));
+
+            $.ajax({
+                url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/login',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    //alert(data.msg);
+                    console.log(data);
+                    if (data.Error) {
+                      if (data.Error == 'UserNotFoundException') {
+                        alert('User not found');
+                        return;
+                      }
+                      if (data.Error == 'NotAuthorizedException') {
+                        alert('Incorrect account or password');
+                        return;
+                      }
+                      if (data.Error == 'TooManyRequestsException') {
+                        alert('Operation too frequently');
+                        return;
+                      }
+                      alert('Other errors');
+                      return;
+                    }
+
+                    var res = data.user.AuthenticationResult;
+                    localStorage.setItem('hangout_accesstoken', res.AccessToken);
+                    localStorage.setItem('hangout_idtoken', res.IdToken);
+                    localStorage.setItem('hangout_refreshtoken', res.RefreshToken);
+                    console.log('done');
+                    location.href = 'https://s3.amazonaws.com/group6-activity-website/all_activities_new.html';
+                },
+                data: JSON.stringify(info),
+            });
+        }
+    </script>
 </body>
 </html>
