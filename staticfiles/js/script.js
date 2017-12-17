@@ -264,14 +264,14 @@ function getMyAttActs() {
         token: localStorage.getItem('hangout_accesstoken'),
     }
     $.ajax({
-        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/profile',
-        type: 'put',
-        dataType: 'json',
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/attend',
+        type: 'get',
+        //dataType: 'json',
         contentType: "application/json",
-        headers: {'Content-Type': 'application/json',
+        headers: {
                 'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
-        data: JSON.stringify(info),
+        //data: JSON.stringify(info),
         success: function (data) {
             console.log(data);
             renderMyActs(data.activities);
@@ -290,7 +290,7 @@ function getMyCrtActs() {
         type: 'put',
         dataType: 'json',
         contentType: "application/json",
-        headers: {'Content-Type': 'application/json',
+        headers: {
                 'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
         data: JSON.stringify(info),
@@ -310,10 +310,10 @@ function renderMyActs(acts) {
 
 function renderMyAct(act) {
     var node = createNode('div', ['col-lg-10', 'my-att-act']);
-    var divNode = createNode('div', ['col-lg-10', 'list-group']);
+    var divNode = createNode('div', []);
     node.appendChild(divNode);
 
-    var actLinkNode = createNode('a', ['list-group-item', 'active']);
+    var actLinkNode = createNode('a', ['col-lg-10', 'list-group-item', 'active']);
     actLinkNode.setAttribute('href', '/activity_detail/' + act.id);
     var actNameNode = createNode('h4', ['list-group-item-heading']);
     actNameNode.innerHTML = act.name;
@@ -323,7 +323,7 @@ function renderMyAct(act) {
     actLinkNode.appendChild(actTimeNode);
     divNode.appendChild(actLinkNode);
 
-    var actDescriptionNode = createNode('div', ['list-group-item']);
+    var actDescriptionNode = createNode('div', ['col-lg-10', 'list-group-item']);
     actDescriptionNode.innerHTML = "<h4 class='list-group-item-heading'> <span class='glyphicon glyphicon-map-marker' aria-hidden:true></span>" + act.place + "</h4><p class='list-group-item-text'>" + act.explanation + "</p>"
     divNode.appendChild(actDescriptionNode);
 
@@ -338,4 +338,6 @@ function renderMyAct(act) {
         buttonNode.innerHTML = '<form role="form" method="post" action=""><input type="hidden" name="activity_id" value={{activity.id}} /><input type="hidden" name="form_type" value="apply_activity" /><button type="submit" class="btn btn-md btn-danger pull-right" style="position:relative;top:4px">Apply</button></form>';
     }
     divNode.appendChild(buttonNode);
+
+    return node;
 }
