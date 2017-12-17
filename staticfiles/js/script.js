@@ -226,6 +226,7 @@ function postActivity() {
     .then(function (res) {
       $('input[type="submit"]').attr('disabled', false);
       console.log(res);
+      alert(res.statusText);
       // if (res.statusText === 'Created') { getActivities(); }
     })
     .catch(function (error) {
