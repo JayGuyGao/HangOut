@@ -1,4 +1,5 @@
 var esEndpoint = 'https://search-group6-activity-website-gv3gkyysjd5b7hnkji7hcmghzi.us-east-1.es.amazonaws.com/activities_test/activity/';
+// var esEndpoint = 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/activity/';
 
 /******************** helper function ********************/
 
@@ -74,13 +75,35 @@ function fillInfo() {
 }
 
 function getActivities() {
-  fetch(esEndpoint + '_search')
+  // fetch(esEndpoint + composeQuery())
+  fetch(esEndpoint + '_search' + composeQuery(), {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET'
+  })
     .then(function (res) {
       return res.json();
     })
     .then(function (data) {
       console.log(data.hits.hits);
       renderAllActivities(data.hits.hits);
+    })
+    .catch(function (error) {
+      console.log(error);
+  });
+}
+
+
+function getActivityById(id, next) {
+  fetch(esEndpoint + id, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET'
+  })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      console.log(data._source);
+      next(data._source);
     })
     .catch(function (error) {
       console.log(error);
@@ -120,7 +143,7 @@ function renderActivity(activity) {
 
   // activityImgLink
   var activityImgLink = createNode('a', []);
-  activityImgLink.setAttribute('href', '/activity_detail/' + activity._id);
+  activityImgLink.setAttribute('href', 'activity_detail.html?q=' + activity._id);
 
   var activityImg = createNode('img', ['activity-img']);
   activityImg.setAttribute('src', activity._source.picture);
@@ -166,7 +189,7 @@ function deleteActivity(activityId) {
   fetch(esEndpoint + activityId, { method: "DELETE" })
     .then(function (res) {
       console.log(res);
-      getActivities();
+      // getActivities();
     })
     .catch(function (error) {
       console.log(error);
@@ -184,7 +207,7 @@ function postActivity() {
     })
     .then(function (res) {
       console.log(res);
-      if (res.statusText === 'Created') { getActivities(); }
+      // if (res.statusText === 'Created') { getActivities(); }
     })
     .catch(function (error) {
       console.log(error);
@@ -195,13 +218,24 @@ function composeNewActivity(elements) {
   var obj ={};
   for(var i = 0; i < elements.length ; ++i){
       var item = elements.item(i);
-      if (item.name !== '') {
+      if (item.name !== '' && item.value !== '') {
         obj[item.name] = item.value;
       }
   }
   return obj;
 }
 
+function composeQuery() {
+  var form = document.getElementById('search-form');
+  var type = form.elements.type.value;
+  var kw = form.elements.kw.value;
+  var ret = '';
+  ret += kw === ''? '' : '(' + kw + ')';
+  if (type !== '0') {
+    ret += (ret.length > 0 ? 'AND' : '') + '(type:' + type + ')';
+  }
+  return ret.length > 0? '?q=' + ret : ret;
+}
 
 function getMyAttActs() {
     var info = {
@@ -285,6 +319,5 @@ function renderMyAct(act) {
     }
     divNode.appendChild(buttonNode);
 }
-
 
 

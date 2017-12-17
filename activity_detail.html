@@ -15,7 +15,7 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'" onload="getUser()">
+<body style="font-family:'Microsoft YaHei'" onload="getUser();initPage()">
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
@@ -48,7 +48,7 @@
 
 
 
-      
+
             <div class="col-lg-7 col-sm-8">
                 <ul class="nav nav-pills">
                     <li class="active"><a href="#">Activity Detail</a></li>
@@ -57,13 +57,15 @@
                 <div style="top:10px">
                 <blockquote>
                     <p></p>
-                    <h2>{{activity.name}}</h2>
+                    <h2><span id="activity-name"></span></h2>
                     <!--<p><h3>{{activity.status}}</h3></p>-->
-                    <h4>Joined {{activity.current_size}}   /  {{activity.max_size}}</h4>
+                    <h4>Joined <span id="activity-current_size"></span>
+   /  <span id="activity-max_size"></span>
+</h4>
                     <p></p>
                 </blockquote>
                 </div>
-                    <img src="/{{activity.picture}}" alt="Activity Picture" width="60%">
+                    <img id="activity-picture" alt="Activity Picture" width="60%">
                     <table class="table table-hover" style="font-family:'Microsoft YaHei';font-size:1.7em">
                         <thead>
                             <tr>
@@ -75,45 +77,37 @@
 
                             <tr>
                                 <td>Time</td>
-                                <td>mm/dd/yyyy hh:mm  ~  mm/dd/yyyy hh:mm</td>
+                                <td><span id="activity-start_date"></span> <span id="activity-start_time"></span>  ~  <span id="activity-end_date"></span> <span id="activity-end_time"></span></td>
                             </tr>
                             <tr>
                                 <td>Place</td>
-                                <td>{{activity.place}}</td>
+                                <td><span id="activity-place"></span></td>
                             </tr>
                             <tr>
                                 <td>Organizer</td>
-                                <td><a href="/user_info/{{ activity.organizer.id }}/">{{activity.organizer.nickname}}</a></td>
+                                <td><span id="activity-current_size"></span>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Type</td>
-                                <td>{% if activity.type == "1" %} Movie {% endif %}
-                                    {% if activity.type == "2" %} Sports {% endif %}
-                                    {% if activity.type == "3" %} Party {% endif %}
-                                    {% if activity.type == "4" %} Meal {% endif %}
-                                    {% if activity.type == "5" %} Academic {% endif %}
-                                    {% if activity.type == "6" %} Others {% endif %}
+                                <td><span id="activity-type"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Description</td>
-                                <td>{{activity.explanation}}</td>
+                                <td><span id="activity-explanation"></span></td>
                             </tr>
                             <tr>
                                 <td>Age requirement</td>
-                                <td>{{activity.min_age}} ~ {{activity.max_age}}  岁</td>
+                                <td><span id="activity-min_age"></span> ~ <span id="activity-max_age"></span>  岁</td>
                             </tr>
                             <tr>
                                 <td>Sex requirement</td>
-                                <td>
-                                    {% if activity.sex_requirement == "unlimit" %} No limit {% endif %}
-                                    {% if activity.sex_requirement == "male" %} Men only {% endif %}
-                                    {% if activity.sex_requirement == "female" %} Women only {% endif %}
-                                </td>
+                                <td><span id="activity-sex_requirement"></span></td>
                             </tr>
                             <tr>
                                 <td>Application close time</td>
-                                <td>mm/dd/yyyy hh:mm</td>
+                                <td><span id="activity-applyend_date"></span> <span id="activity-applyend_time"></span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -165,13 +159,27 @@
                 }
             }
         };
+
+        var ALL_FIELDS = ['applyend_date', 'applyend_time', 'end_date', 'end_time', 'explanation', 'max_age', 'max_size', 'min_age', 'name', 'picture', 'place', 'sex_requirement', 'start_date', 'start_time', 'type'];
+
+        function initPage() {
+            getActivityById(window.location.search.split("=")[1],
+                            renderActivityDetails);
+        }
+
+        function renderActivityDetails(activity) {
+            ALL_FIELDS.forEach(function(field) {
+                var node = document.getElementById('activity-' + field);
+                node.textContent = activity[field];
+            });
+
+            var node = document.getElementById('activity-picture');
+            node.setAttribute('src', activity.picture);
+        }
+
         </script>
-
-
-
-
-
         </div>
     </div>
+    <script type="text/javascript" src="staticfiles/js/script.js"></script>
 </body>
 </html>

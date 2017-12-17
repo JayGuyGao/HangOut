@@ -15,6 +15,7 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
+
 <body style="font-family:'Microsoft YaHei'" onload="getActivities();getUser()">
 
     <nav class="navbar navbar-default" role="navigation">
@@ -50,8 +51,23 @@
 
             <div class="col-lg-7 col-lg-offset-1">
                 <h2>Activity List</h2>
+                <form id="search-form">
+                    Type:
+                    <input type="radio" name="type" value="0" checked="checked">All
+                    <input type="radio" name="type" value="1">Movie
+                    <input type="radio" name="type" value="2">Sports
+                    <input type="radio" name="type" value="3">Party
+                    <input type="radio" name="type" value="4">Meal
+                    <input type="radio" name="type" value="5">Academic
+                    <input type="radio" name="type" value="6">Others
 
-                <form class="form-horizontal" action="" method="">
+                    <br>
+                    Keyword:
+                    <input type="text" name="kw" />
+                </form>
+                <button onclick="getActivities()" class="btn btn-md btn-primary col-lg-offset-2">Search</button>
+
+                <form class="form-horizontal">
                     <input type="hidden" name="form_type" value="search" />
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Type:</label>
@@ -62,7 +78,7 @@
                             <label class="checkbox-inline"><input type="checkbox" name="3" />Party</label>
                             <label class="checkbox-inline"><input type="checkbox" name="4" />Meal</label>
                             <label class="checkbox-inline"><input type="checkbox" name="5" />Academic</label>
-                            <label class="checkbox-inline"><input type="checkbox" name="6" />Academic</label>
+                            <label class="checkbox-inline"><input type="checkbox" name="6" />Ohters</label>
                         </div>
                     </div>
 
