@@ -57,7 +57,7 @@
                     <div class="form-group">
                        <label for="password" class="col-sm-5 control-label">Old password</label>
                        <div class="col-sm-7">
-                          <input type="password" class="form-control" name="old_password" 
+                          <input id="old_pass" type="password" class="form-control" name="old_password" 
                              placeholder="Please enter old password">
                            <!-- {% if errors.old_password %}
                                 {{errors.old_password}}
@@ -68,7 +68,7 @@
                     <div class="form-group">
                        <label for="password" class="col-sm-5 control-label">New password</label>
                        <div class="col-sm-7">
-                          <input type="password" class="form-control" name="new_password1" 
+                          <input id="new_pass1" type="password" class="form-control" name="new_password1" 
                              placeholder="Please enter new password">
                            <!-- {% if errors.new_password1 %}
                                 {{errors.new_password1}}
@@ -79,7 +79,7 @@
                     <div class="form-group">
                        <label for="password" class="col-sm-5 control-label">Repeat new password</label>
                        <div class="col-sm-7">
-                          <input type="password" class="form-control" name="new_password2" 
+                          <input id="new_pass2" type="password" class="form-control" name="new_password2" 
                              placeholder="Please repeat new password">
                            <!-- {% if errors.new_password2 %}
                                 {{errors.new_password2}}
@@ -89,10 +89,68 @@
 
                 </form>  
 
-                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit"/>   
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" onclick="changeUserPwd()" />
             </div>
 		</div>
 
+    <script>
+      function changeUserPwd() {
+        var info = {
+                username: localStorage.getItem('hangout_account'),
+                old_pass: $("#old_pass").val(),
+                new_pass: $("#new_pass1").val(),
+                new_pass2: $("#new_pass2").val(),
+                token: localStorage.getItem('hangout_accesstoken'),
+            };
+
+            console.log(JSON.stringify(info));
+            $.ajax({
+                url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/resetpass',
+                type: 'post',
+                dataType: 'json',
+                contentType: "application/json",
+                headers: {'Content-Type': 'application/json',
+                        'Authorization': localStorage.getItem('hangout_idtoken'),
+                        },
+                success: function (data) {
+                    //alert(data.msg);
+                    console.log(data);
+                    if (data.Error) {
+                      if (data.Error == 'UserNotFoundException') {
+                        alert('User not found');
+                        return;
+                      }
+                      if (data.Error == 'NotAuthorizedException') {
+                        alert('Incorrect password');
+                        return;
+                      }
+                      if (data.Error == 'TooManyRequestsException') {
+                        alert('Operation too frequently');
+                        return;
+                      }
+                      alert('Other errors');
+                      return;
+                    }
+                    alert('Success!');
+                },
+                data: JSON.stringify(info),
+            });
+            // fetch('https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/resetpass', {
+            //   headers: {'Content-Type': 'application/json',
+            //             'Authorization': localStorage.getItem('hangout_idtoken'),
+            //             },
+            //   method: "POST",
+            //   body: JSON.stringify(info)
+            //   })
+            //       .then(function (res) {
+            //         console.log(res);
+            //         console.log('GXD');
+            //       })
+            //       .catch(function (error) {
+            //         console.log(error);
+            //       });
+      }
+    </script>
 
 
 

@@ -20,6 +20,11 @@ function getUser() {
   $('#show-username').html('<span class="fa fa-user"></span>' + account);
 }
 
+function logout() {
+  alert('logout');
+  location.href = 'https://s3.amazonaws.com/group6-activity-website/login_form.html';
+}
+
 function getActivities() {
   fetch(esEndpoint + '_search')
     .then(function (res) {
