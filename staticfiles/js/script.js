@@ -1,5 +1,5 @@
 var esEndpoint = 'https://search-group6-activity-website-gv3gkyysjd5b7hnkji7hcmghzi.us-east-1.es.amazonaws.com/activities_test/activity/';
-// var esEndpoint = 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/activity/';
+var apiGateWay = 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/activity/';
 
 /******************** helper function ********************/
 
@@ -12,6 +12,8 @@ function createNode(type, classes) {
 }
 
 /******************** helper function ********************/
+
+
 function joinAct(act_id) {
   var info = {
     username: localStorage.getItem('hangout_account'),
@@ -146,24 +148,8 @@ function renderAllActivities(activities) {
   });
 }
 
-// function renderActivity(activity) {
-//   // create list item
-//   var node = document.createElement("LI");
-//   node.setAttribute('id', activity._id);
-//   node.appendChild(document.createTextNode(JSON.stringify(activity._source)));
-
-//   // create delete button
-//   var button = document.createElement("button");
-//   button.innerHTML = 'Delete'
-//   button.onclick = function() { deleteActivity(activity._id) };
-//   node.appendChild(button);
-
-//   return node;
-// }
-
-
 function renderActivity(activity) {
-  var node = createNode('div', ['list-group']);
+  var node = createNode('div', ['list-group', 'col-sm-5', 'col-md-4', 'col-lg-3']);
   var activityDiv = createNode('div', ['sub-list-group']);
   node.appendChild(activityDiv);
 
@@ -202,8 +188,13 @@ function renderActivity(activity) {
   joinButton.textContent = 'Join';
   joinButton.onclick = function() { joinAct(activity._id) };
 
+  // deleteButton
+  var deleteButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
+  deleteButton.textContent = 'Delete';
+  deleteButton.onclick = function() { deleteActivity(activity._id) };
+
   // add all div into frame
-  [activityImgLink, activityNameLink, activityDesDiv, joinButton].forEach(function(child) {
+  [activityImgLink, activityNameLink, activityDesDiv, deleteButton, joinButton].forEach(function(child) {
     activityDiv.appendChild(child);
   });
 
@@ -215,7 +206,7 @@ function deleteActivity(activityId) {
   fetch(esEndpoint + activityId, { method: "DELETE" })
     .then(function (res) {
       console.log(res);
-      // getActivities();
+      alert(res.statusText);
     })
     .catch(function (error) {
       console.log(error);
@@ -227,7 +218,7 @@ function postActivity() {
   var form = document.getElementById('new_activity');
   var activities = composeNewActivity(form.elements);
   console.log(activities);
-  fetch(esEndpoint, {
+  fetch(apiGateWay, {
     headers: { 'Content-Type': 'application/json' },
     method: "POST",
     body: JSON.stringify(activities)
@@ -348,5 +339,3 @@ function renderMyAct(act) {
 
     return node;
 }
-
-
