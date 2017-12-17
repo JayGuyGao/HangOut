@@ -114,19 +114,6 @@
                     <blockquote>
                         <h2><b>Comment</b></h2>
                         </blockquote>
-                        {% for comment in comments %}
-                        <div class="media">
-                            <div class="media-left media-middle">
-                                <img src="/{{comment.poster.headImg}}" alt="Smiley face" height="42" width="42">
-                            </div>
-                            <div class="media-body form-inline"  style="bottom:5px;">
-                                <h4 class="media-haeding">{{comment.poster.nickname}}</h4>
-                                <h5>{{comment.content}}</h5>
-                               mm/dd/yyyy hh:mm
-                                <div class="divider"></div>
-                            </div>
-                        </div>
-                        {% endfor %}
                         <div class="col-lg-12" style="top:5px;margin-bottom:20px;">
                             <form class="form-horizontal" role="form" method="post" action="">
                             <input type="hidden" name="form_type" value="new_comment" />
