@@ -67,18 +67,17 @@
                 </form>
                 <button onclick="getActivities()" class="btn btn-md btn-primary col-lg-offset-2">Search</button> -->
 
-                <form class="form-horizontal" >
-                    <input type="hidden" name="form_type" value="search" />
+                <form class="form-horizontal" id="search-form">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Type:</label>
-                        <div class="col-sm-10" id="search-form">
-                            <label class="checkbox-inline"><input type="radio" value="0" checked/>All</label>
-                            <label class="checkbox-inline"><input type="radio" value="1" />Movie</label>
-                            <label class="checkbox-inline"><input type="radio" value="2" />Sports</label>
-                            <label class="checkbox-inline"><input type="radio" value="3" />Party</label>
-                            <label class="checkbox-inline"><input type="radio" value="4" />Meal</label>
-                            <label class="checkbox-inline"><input type="radio" value="5" />Academic</label>
-                            <label class="checkbox-inline"><input type="radio" value="6" />Ohters</label>
+                        <div class="col-sm-10">
+                            <label class="checkbox-inline"><input name="type" type="radio" value="0" checked/>All</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="1" />Movie</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="2" />Sports</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="3" />Party</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="4" />Meal</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="5" />Academic</label>
+                            <label class="checkbox-inline"><input name="type" type="radio" value="6" />Ohters</label>
                         </div>
                     </div>
 
