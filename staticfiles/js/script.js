@@ -1,4 +1,5 @@
 var esEndpoint = 'https://search-group6-activity-website-gv3gkyysjd5b7hnkji7hcmghzi.us-east-1.es.amazonaws.com/activities_test/activity/';
+// var esEndpoint = 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/activity/';
 
 /******************** helper function ********************/
 
@@ -30,7 +31,6 @@ function logout() {
 
 function getActivities() {
   // fetch(esEndpoint + composeQuery())
-  console.log(composeQuery());
   fetch(esEndpoint + '_search' + composeQuery(), {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET'
@@ -41,6 +41,24 @@ function getActivities() {
     .then(function (data) {
       console.log(data.hits.hits);
       renderAllActivities(data.hits.hits);
+    })
+    .catch(function (error) {
+      console.log(error);
+  });
+}
+
+
+function getActivityById(id, next) {
+  fetch(esEndpoint + id, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET'
+  })
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      console.log(data._source);
+      next(data._source);
     })
     .catch(function (error) {
       console.log(error);
@@ -80,7 +98,7 @@ function renderActivity(activity) {
 
   // activityImgLink
   var activityImgLink = createNode('a', []);
-  activityImgLink.setAttribute('href', '/activity_detail/' + activity._id);
+  activityImgLink.setAttribute('href', 'activity_detail.html?q=' + activity._id);
 
   var activityImg = createNode('img', ['activity-img']);
   activityImg.setAttribute('src', activity._source.picture);
