@@ -30,7 +30,7 @@ function logout() {
 }
 
 function getActivities() {
-  // fetch(esEndpoint + composeQuery())
+  console.log(composeQuery());
   fetch(esEndpoint + '_search' + composeQuery(), {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET'
