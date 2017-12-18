@@ -34,7 +34,7 @@ function joinAct(act_id) {
         dataType: 'json',
         contentType: "application/json",
         headers: {'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('hangout_idtoken'),
+                  'Authorization': localStorage.getItem('hangout_idtoken'),
                 },
         data: JSON.stringify(info),
         success: function (data) {
@@ -197,12 +197,12 @@ function renderActivity(activity) {
   joinButton.onclick = function() { joinAct(activity._id) };
 
   // deleteButton
-  var deleteButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
-  deleteButton.textContent = 'Delete';
-  deleteButton.onclick = function() { deleteActivity(activity._id) };
+  // var deleteButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
+  // deleteButton.textContent = 'Delete';
+  // deleteButton.onclick = function() { deleteActivity(activity._id) };
 
   // add all div into frame
-  [activityImgLink, activityNameLink, activityDesDiv, deleteButton, joinButton].forEach(function(child) {
+  [activityImgLink, activityNameLink, activityDesDiv, joinButton].forEach(function(child) {
     activityDiv.appendChild(child);
   });
 
