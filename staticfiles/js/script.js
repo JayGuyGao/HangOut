@@ -235,7 +235,7 @@ function postActivity() {
     })
     .then(function (res) {
       $('input[button="submit"]').attr('disabled', false);
-      console.log(res._id);
+      console.log(res);
       //alert(res.statusText);
       //location.href = ''
       // if (res.statusText === 'Created') { getActivities(); }
