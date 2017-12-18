@@ -117,6 +117,35 @@
                 contentType: "application/json",
                 success: function (data) {
                     $('input[type="submit"]').attr('disabled', false);
+                    console.log(data);
+                    if (data.Error) {
+                      if (data.Error == 'PasswordMatchException') {
+                        alert('Password not match');
+                        return;
+                      }
+                      if (data.Error == 'PasswordException') {
+                        alert('Invalid password');
+                        return;
+                      }
+                      if (data.Error == 'UsernameExistsException') {
+                        alert('Account already exists');
+                        return;
+                      }
+                      if (data.Error == 'InvalidEmailAddress') {
+                        alert('Invalid email');
+                        return;
+                      }
+                      if (data.Error == 'InvalidAgeNumber') {
+                        alert('Invalid age');
+                        return;
+                      }
+                      if (data.Error == 'TooManyRequestsException') {
+                        alert('Operation too frequently');
+                        return;
+                      }
+                      alert('Other errors');
+                      return;
+                    }
                     location.href = 'register_success.html';
                 },
                 data: JSON.stringify(info),
