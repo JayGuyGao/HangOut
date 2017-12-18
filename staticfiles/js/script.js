@@ -222,7 +222,7 @@ function deleteActivity(activityId) {
 }
 
 function postActivity() {
-  $('input[type="submit"]').attr('disabled', true);
+  $('button[type="submit"]').attr('disabled', true);
   var form = document.getElementById('new_activity');
   var activities = composeNewActivity(form.elements);
   console.log(activities);
@@ -234,13 +234,14 @@ function postActivity() {
     body: JSON.stringify(activities)
     })
     .then(function (res) {
-      $('input[type="submit"]').attr('disabled', false);
-      console.log(res);
-      alert(res.statusText);
+      $('input[button="submit"]').attr('disabled', false);
+      console.log(res._id);
+      //alert(res.statusText);
+      //location.href = ''
       // if (res.statusText === 'Created') { getActivities(); }
     })
     .catch(function (error) {
-      $('input[type="submit"]').attr('disabled', false);
+      $('input[button="submit"]').attr('disabled', false);
       console.log(error);
     });
 }
