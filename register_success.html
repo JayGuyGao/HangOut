@@ -27,7 +27,7 @@
 	<div style="width:100%;height:100%;position:fixed;z-index: 8886;top: 0px;left: 0px;background: skyblue;filter: alpha(Opacity=30); -moz-opacity:0.30;opacity:0.30;">
 	</div>
 	<div style="z-index: 88888;width:50%;height:50%;position:fixed;top:25%;left:25%;background-color:white;font-size:2em;text-align:center;padding-top:5%;border-radius:10px">
-	Register success! You will login after <div id="time" style="font-size:3em"></div> or click <a href="https://s3.amazonaws.com/group6-activity-website/login_form.html">here</a> to login immediately.</div>
+	Register success! You will login after <div id="time" style="font-size:3em"></div> or click <a href="login_form.html">here</a> to login immediately.</div>
 	
 	<script language="javascript" type="text/javascript">
 		var t = 6;
@@ -35,7 +35,7 @@
 		t -= 1;  
 		document.getElementById('time').innerHTML= t + 's';  
 		if(t==0){  
-			location.href='https://s3.amazonaws.com/group6-activity-website/login_form.html';  
+			location.href='login_form.html';  
 		}  
 		setTimeout("showTime()",1000);  
 	}  

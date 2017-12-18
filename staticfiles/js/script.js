@@ -13,6 +13,14 @@ function createNode(type, classes) {
 
 /******************** helper function ********************/
 
+function loadActId() {
+  if ($("#attendance")) {
+    $('#attendance').attr('href', 'activity_attendance.html?q=' + localStorage.getItem('hangout_actid'))
+  }
+  if ($("#detail")) {
+    $('#detail').attr('href', 'activity_detail.html?q=' + localStorage.getItem('hangout_actid'))
+  }
+}
 
 function joinAct(act_id) {
   var info = {
@@ -47,7 +55,7 @@ function getUser() {
   var account = localStorage.getItem('hangout_account');
   console.log('Account:' + account);
   if (account == null) {
-    location.href = 'https://s3.amazonaws.com/group6-activity-website/login_form.html';
+    location.href = 'login_form.html';
   }
   $('#show-username').html('<span class="fa fa-user"></span>' + account);
 }
@@ -57,7 +65,7 @@ function logout() {
   localStorage.removeItem('hangout_idtoken');
   localStorage.removeItem('hangout_refreshtoken');
   localStorage.removeItem('hangout_account');
-  location.href = 'https://s3.amazonaws.com/group6-activity-website/login_form.html';
+  location.href = 'login_form.html';
 }
 
 function fillInfo() {
@@ -219,7 +227,8 @@ function postActivity() {
   var activities = composeNewActivity(form.elements);
   console.log(activities);
   fetch(apiGateWay, {
-    headers: { 'Content-Type': 'application/json' },
+    //headers: { 'Content-Type': 'application/json' },
+    contentType: "application/json",
     method: "POST",
     body: JSON.stringify(activities)
     })

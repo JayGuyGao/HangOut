@@ -11,7 +11,7 @@
 <body style="font-family:'Microsoft YaHei'">
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="all_activities_new.html" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
         <!--<a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">登录</a>
@@ -27,7 +27,7 @@
             <div class="col-sm-9 col-md-6 col-lg-4" style="border:2px solid skyblue">
                 <ul class="nav nav-tabs">
                    <li class="active"><a href="#">Login</a></li>
-                   <li><a href="https://s3.amazonaws.com/group6-activity-website/register.html">Register</a></li>
+                   <li><a href="register.html">Register</a></li>
                 </ul>
 
                <form id="user_login" class="form-horizontal" role="form" style="padding-top:5%" action="/login/" method="post">
@@ -105,7 +105,7 @@
                     localStorage.setItem('hangout_refreshtoken', user.RefreshToken);
                     localStorage.setItem('hangout_id', res.id);
                     console.log('done');
-                    location.href = 'https://s3.amazonaws.com/group6-activity-website/all_activities_new.html';
+                    location.href = 'all_activities_new.html';
                 },
                 data: JSON.stringify(info),
             });

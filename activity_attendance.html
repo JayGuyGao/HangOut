@@ -15,16 +15,16 @@
     <script type="text/javascript" src="staticfiles/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
     <script type="text/javascript" src="staticfiles/js/accept-or-reject.js" charset="UTF-8"></script>
 </head>
-<body style="font-family:'Microsoft YaHei'" onload="getUser()">
+<body style="font-family:'Microsoft YaHei'" onload="loadActId();getUser();getAttends()">
 
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header navbar-static-top">
-            <a class="navbar-brand" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:2.5em">HangOut</a>
+            <a class="navbar-brand" href="all_activities_new.html" style="font-size:2.5em">HangOut</a>
         </div>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.5em">  </a>
         <a class="navbar-brand navbar-right" onclick="logout()" style="font-size:1.5em"><span class="fa fa-sign-out"></span></a>
         <a class="navbar-brand navbar-right" href="#" style="font-size:1.2em"><span class="fa fa-envelope"><span class="badge empty" style="background-color:red">0</span></span></a>
-        <a id="show-username" class="navbar-brand navbar-right" href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
+        <a id="show-username" class="navbar-brand navbar-right" href="all_activities_new.html" style="font-size:1.5em"><span class="fa fa-user"></span>User</a>
     </nav>
 
     <div class="container" style="width:100%;padding-left:5px;padding-right:5px;">
@@ -32,16 +32,16 @@
             <div class="col-lg-2 col-sm-2" style="padding-left:20px">
                 <ul class="nav nav-tabs">
                     <li class="nav-header">Personal</li>
-                    <li><a href="#"><span class="fa fa-pencil"></span>Profile</a></li>
-                    <li><a href="#"><span class="fa fa-lock"></span>Password</a></li>
+                    <li><a href="change_userinfo_form.html"><span class="fa fa-pencil"></span>Profile</a></li>
+                    <li><a href="change_userpwd_form.html"><span class="fa fa-lock"></span>Password</a></li>
                     <li class="nav-header">Social</li>
                     <li><a href="/my_friends/"><span class="fa fa-user"></span>My Friends</a></li>
                     <li class="divider"></li>
                     <li class="nav-header">Activity</li>
-                    <li><a href="https://s3.amazonaws.com/group6-activity-website/add_activity.html"><span class="fa fa-plus"></span>Create Activity</a></li>
-                    <li><a href="https://s3.amazonaws.com/group6-activity-website/my_activities_attend.html"><span class="fa fa-comment"></span>My Activities</a></li>
+                    <li><a href="add_activity.html"><span class="fa fa-plus"></span>Create Activity</a></li>
+                    <li><a href="my_activities_attend.html"><span class="fa fa-comment"></span>My Activities</a></li>
                     <li><a href="#"><span class="fa fa-comment-o"></span>Friends' Activities</a></li>
-                    <li><a href="https://s3.amazonaws.com/group6-activity-website/all_activities_new.html"><span class="fa fa-globe"></span>All Activities</a></li>
+                    <li><a href="all_activities_new.html"><span class="fa fa-globe"></span>All Activities</a></li>
                     <li class="divider"></li>
                 </ul>
             </div>
@@ -52,10 +52,10 @@
 
                 <div class="col-lg-7 col-sm-8">
                 	<ul class="nav nav-pills">
-                    <li><a href="/activity_detail/{{ activity.id }}/">Activity Detail</a></li>
+                    <li><a id="detail" href="activity_detail.html">Activity Detail</a></li>
                     <li class="active"><a href="#">Attendance</a></li>        
                 </ul>
-                <h2>Attendance list of {{activity.name}}</h2>
+                <h2 id='att-title'>Attendance list of {{activity.name}}</h2>
                     <div class="col-lg-12">
                         <table class="table table-hover" style="font-family:'Microsoft YaHei';font-size:1.3em">
                         <thead>
@@ -65,38 +65,77 @@
                             </tr>
                             
                         </thead>
-                        <tbody>
+                        <tbody id="attend-list">
                             <tr>
                                 <td>Account</td>
                                 <td>Nickname</td>
-                                <td>Sex</td>
+                                <td>Gender</td>
                                 <td>Age</td>
                             </tr>
                             <!-- {% for attendance in attendances %} -->
-                                <tr>
+                                <!-- <tr>
                                 <td><a href="/user_info/{{ attendance.id }}/">{{attendance.account}}</a></td>
                                 <td>{{attendance.nickname}}</td>
                                 <td>Male
                                 </td>
                                 <td>{{attendance.age}}</td>
-                                <td></td>
+                                <td></td> -->
                                 <!-- {% if organizer %} -->
-                                <td>
+                                <!-- <td>
                                     <form role="form" method="post" action="">
                                     <input type="hidden" name="attendance_id" value={{attendance.id}} />
                                     <input type="hidden" name="form_type" value="cancel_attendance" />
                                     <button type="submit" class="att-btn btn btn-md btn-danger pull-right" >Delete</button>
                                     </form>
-                                </td>
+                                </td> -->
                                 <!-- {% endif %}       -->
+                            <!-- </tr> -->
                             <!-- {% endfor %} -->
-                            </tr>
                         </tbody>
                     </table>
                     </div>
             </div>
 
+        <script>
+            function getAttends() {
+                $('#att-title').text('Attendance list of ' + localStorage.getItem('hangout_actname'));
+                var info = {
+                    id: localStorage.getItem('hangout_id'),
+                    username: localStorage.getItem('hangout_account'),
+                    token: localStorage.getItem('hangout_accesstoken'),
+                }
+                $.ajax({
+                    url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/people?activityid=' + localStorage.getItem('hangout_actid'),
+                    type: 'get',
+                    //dataType: 'json',
+                    contentType: "application/json",
+                    headers: {
+                            'Authorization': localStorage.getItem('hangout_idtoken'),
+                            },
+                    //data: JSON.stringify(info),
+                    success: function (data) {
+                        console.log(data.users);
+                        renderAttends(data.users);
+                    },
+                })
+            }
 
+            function renderAttends(users) {
+                var frame = document.getElementById('attend-list');
+                users.forEach(function(user) {
+                    frame.appendChild(renderAttend(user));
+                });
+            }
+
+            function renderAttend(user) {
+                var node = createNode('tr', []);
+                node.innerHTML = '<td>' + user.email + '</td>' +
+                                '<td>' + user.nickname + '</td>' +
+                                '<td>' + user.gender + '</td>' +
+                                '<td>' + user.age + '</td><td></td>';
+                return node;
+            }
+        </script>
 
 
 
