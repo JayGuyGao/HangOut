@@ -48,6 +48,7 @@ function joinAct(act_id) {
         },
     })
 }
+
 function getUser() {
   var accessToken = localStorage.getItem('hangout_accesstoken');
   var idToken = localStorage.getItem('hangout_idtoken');
@@ -157,56 +158,24 @@ function renderAllActivities(activities) {
 }
 
 function renderActivity(activity) {
-  var node = createNode('div', ['list-group', 'col-sm-5', 'col-md-4', 'col-lg-3']);
-  var activityDiv = createNode('div', ['sub-list-group']);
-  node.appendChild(activityDiv);
+  var node = createNode('div', ['card', 'text-center']);
+  node.innerHTML = `
+<img class="activity-img card-img-top" src="${activity._source.picture}">
+<div class="card-block activity-info">
+  <a href="activity_detail.html?q=${activity._id}">
+    <h4 class="card-title activity-name">${activity._source.name}</h4>
+  </a>
+  <p class="card-text activity-explanation">${activity._source.explanation}</p>
+  <button class="btn btn-danger" onclick="deleteActivity('${activity._id}')">Delete</button>
+  <button class="btn btn-success" onclick="joinAct('${activity._id}')">Join</button>
+  <p></p>
+</div>
 
-  // activityImgLink
-  var activityImgLink = createNode('a', []);
-  activityImgLink.setAttribute('href', 'activity_detail.html?q=' + activity._id);
-
-  var activityImg = createNode('img', ['activity-img']);
-  activityImg.setAttribute('src', activity._source.picture);
-  activityImgLink.appendChild(activityImg);
-
-  // activityNameLink
-  var activityNameLink = createNode('a', ['list-group-item', 'active']);
-  var activityName = createNode('h4', ['list-group-item-heading']);
-  activityName.innerHTML = activity._source.name;
-  activityNameLink.appendChild(activityName);
-
-  var activityDate = createNode('h5', ['list-group-item-heading']);
-  activityDate.innerHTML = activity._source.start_time;
-  activityNameLink.appendChild(activityDate);
-
-  // activityDesDiv
-  var activityDesDiv = createNode('div', ['list-group-item']);
-
-  var activityIcon = createNode('h4', ['list-group-item-heading']);
-  activityIcon.appendChild(createNode('span', ['glyphicon', 'glyphicon-map-marker']));
-  activityIcon.appendChild(document.createTextNode(activity._source.place));
-  activityDesDiv.appendChild(activityIcon);
-
-  var activityDes = createNode('p', ['list-group-item-text']);
-  activityDes.textContent = activity._source.explanation;
-  activityDesDiv.appendChild(activityDes);
-
-  // joinButton
-  var joinButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
-  joinButton.textContent = 'Join';
-  joinButton.onclick = function() { joinAct(activity._id) };
-
-  // deleteButton
-  var deleteButton = createNode('button', ['act-btn', 'btn', 'btn-md', 'btn-danger', 'pull-right']);
-  deleteButton.textContent = 'Delete';
-  deleteButton.onclick = function() { deleteActivity(activity._id) };
-
-  // add all div into frame
-  [activityImgLink, activityNameLink, activityDesDiv, deleteButton, joinButton].forEach(function(child) {
-    activityDiv.appendChild(child);
-  });
-
-
+<div class="card-footer text-muted">
+  <i class="fa fa-map-pin" aria-hidden="true"></i> ${activity._source.place}
+  <small class="text-muted">${activity._source.start_time}</small>
+</div>
+  `;
   return node;
 }
 
@@ -226,12 +195,12 @@ function postActivity() {
   var form = document.getElementById('new_activity');
   var activities = composeNewActivity(form.elements);
   console.log(activities);
-  fetch(apiGateWay, {
-    headers: { 'Content-Type': 'application/json',
-	       'Authorization': localStorage.getItem("hangout_idtoken")},
-    contentType: "application/json",
-    method: "POST",
-    body: JSON.stringify(activities)
+  fetch(esEndpoint, {
+    headers: {
+      'Content-Type': 'application/json',
+	    'Authorization': localStorage.getItem("hangout_idtoken")},
+      'method': "POST",
+      'body': JSON.stringify(activities)
     })
     .then(function (res) {
       $('input[button="submit"]').attr('disabled', false);
