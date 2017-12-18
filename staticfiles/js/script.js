@@ -236,11 +236,13 @@ function postActivity() {
     .then(function (res) {
       $('input[button="submit"]').attr('disabled', false);
       console.log(res);
-      //alert(res.statusText);
-      //location.href = ''
+      alert(res.statusText);
+      return res.json();
       // if (res.statusText === 'Created') { getActivities(); }
-    })
-    .catch(function (error) {
+    }).then(function(data){
+	 if (data._id)
+	    location.href = 'activity_detail.html?q=' + data._id;
+    }).catch(function (error) {
       $('input[button="submit"]').attr('disabled', false);
       console.log(error);
     });
