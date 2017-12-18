@@ -48,6 +48,7 @@ function joinAct(act_id) {
         },
     })
 }
+
 function getUser() {
   var accessToken = localStorage.getItem('hangout_accesstoken');
   var idToken = localStorage.getItem('hangout_idtoken');
@@ -161,7 +162,9 @@ function renderActivity(activity) {
   node.innerHTML = `
 <img class="activity-img card-img-top" src="${activity._source.picture}">
 <div class="card-block activity-info">
-  <h4 class="card-title activity-name">${activity._source.name}</h4>
+  <a href="activity_detail.html?q=${activity._id}">
+    <h4 class="card-title activity-name">${activity._source.name}</h4>
+  </a>
   <p class="card-text activity-explanation">${activity._source.explanation}</p>
   <button class="btn btn-danger" onclick="deleteActivity('${activity._id}')">Delete</button>
   <button class="btn btn-success" onclick="joinAct('${activity._id}')">Join</button>

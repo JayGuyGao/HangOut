@@ -49,9 +49,9 @@
 
                 <div class="col-lg-7 col-lg-offset-1" id="activities-frame">
                 <h2>My Activities</h2>
-                    <ul class="nav nav-pills"> 
+                    <ul class="nav nav-pills">
                     <li class="active"><a href="#">Activities which I joined</a></li>
-                    <li><a href="my_activities_launch.html">Activities which I launched</a></li>      
+                    <li><a href="my_activities_launch.html">Activities which I launched</a></li>
                     </ul>
 
                     <div class="col-lg-10 input-group" style="padding-top:15px">
@@ -65,34 +65,6 @@
                             </span>
                         </form>
                     </div>
-                <!-- {% for activity in my_attend_activities %} -->
-                    <!-- <div class="col-lg-10" style="top:15px">
-                        <div class="col-lg-10 list-group">
-                            <a href="/activity_detail/{{ activity.id }}/" class="list-group-item active">
-                                <h4 class="list-group-item-heading">{{activity.name}}</h4>
-                                <h5 class="list-group-item-heading">mm/dd/yyyy hh:mm</h5>
-                            </a>
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading">
-                                    <span class="glyphicon glyphicon-map-marker" aria-hidden:true></span>{{activity.place}}</h4>
-                                <p class="list-group-item-text">{{activity.explanation}}</p>
-                            </div>
-                            {% if activity.status == "already_in" %} -->
-                                 <!-- <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">Joined</button> -->
-                            <!-- {% endif %} -->
-                            <!-- {% if activity.status == "expired" %}
-                                 <button type="submit" class="btn btn-md pull-right disabled" style="position:relative;top:4px">Expired</button>
-                            {% endif %}
-                            {% if activity.status == "available" %}
-                            <form role="form" method="post" action="">
-                                <input type="hidden" name="activity_id" value={{activity.id}} />
-                                <input type="hidden" name="form_type" value="apply_activity" />
-                                <button type="submit" class="btn btn-md btn-danger pull-right" style="position:relative;top:4px">Apply</button>
-                            </form> -->
-                            <!-- {% endif %} -->
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- {% endfor %} -->
                 </div>
 
         <script>

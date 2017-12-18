@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="css/custom.css"">
   <title>HangOut</title>
 </head>
-<body onload="getActivities()">
+<body onload="getActivities();getUser()">
 
   <!--==================== Navbar ====================-->
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">HangOut</a>
+  <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">HangOut</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -19,7 +19,7 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="index.html">
             <span class="fa fa-home"></span> Home <span class="sr-only">(current)</span>
           </a>
         </li>
@@ -33,16 +33,11 @@
             <span class="fa fa-comment"></span> My Activities
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="all_activities_new.html">
-            <span class="fa fa-globe"></span> All Activities
-          </a>
-        </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a id="show-username" class="nav-link" href="#">
+          <a id="show-username" class="nav-link" href="user.html">
             <span class="fa fa-user"></span> Sign in
           </a>
         </li>
@@ -60,7 +55,9 @@
   <!--==================== Filer ====================-->
   <div class="jumbotron" id="main-filer">
     <h1 class="display-3 text-center">HangOut</h1>
-    <p class="lead text-center">Find the activity you want and have fun together!</p>
+    <p class="lead text-center">
+      Find the activity you want and have fun together!
+    </p>
     <hr class="my-4">
 
     <form id="search-form" class="container">
