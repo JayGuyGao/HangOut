@@ -1,0 +1,187 @@
+﻿<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/custom.css"">
+  <title>HangOut</title>
+</head>
+<body onload="getUser()">
+
+  <!--==================== Navbar ====================-->
+  <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">HangOut</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <span class="fa fa-home"></span> Home <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="add_activity.html">
+            <span class="fa fa-plus"></span> Create Activity
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="my_activities.html">
+            <span class="fa fa-comment"></span> My Activities
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a id="show-username" class="nav-link" href="#">
+            <span class="fa fa-user"></span> Sign in
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="logout()">
+            <span class="fa fa-sign-out"></span> Sign out
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <!--==================== Navbar ====================-->
+
+  <!--==================== Content ====================-->
+  <div class="form form-activity">
+    <div class="tab-content" >
+      <h1>New activity:</h1>
+      <form id="new_activity">
+        <!-- Activity type & name -->
+        <div class="top-row">
+
+          <div class="field-wrap quarter">
+            <h5>Type:</h5>
+            <select name="type">
+               <option value="1" selected="selected">Movie</option>
+               <option value="2">Sports</option>
+               <option value="3">Party</option>
+               <option value="4">Meal</option>
+               <option value="5">Academic</option>
+               <option value="6">Other</option>
+             </select>
+          </div>
+
+          <div class="field-wrap three-quarters">
+            <h5>Activity name:</h5>
+            <input name="name" type="text" required autocomplete="off"/>
+          </div>
+        </div>
+        <br>
+
+        <!-- Start & end time -->
+        <div class="top-row">
+          <div class="field-wrap">
+            <h5>Start time:</h5>
+            <input name="start_time" type="datetime-local" required autocomplete="off" placeholder="Start time"/>
+          </div>
+          <div class="field-wrap">
+            <h5>End time:</h5>
+            <input name="end_time" type="datetime-local" required autocomplete="off" placeholder="Start time"/>
+          </div>
+        </div>
+        <br>
+
+        <!-- Deadline & Application status -->
+        <div class="top-row">
+          <div class="field-wrap">
+            <h5>Application deadline:</h5>
+            <input name="applyend_time" type="datetime-local" required autocomplete="off"/>
+          </div>
+
+          <div class="field-wrap">
+            <h5>Application status:</h5>
+            <select name="status">
+               <option value="open" selected="selected">Open to application</option>
+               <option value="closed" >Close to application</option>
+             </select>
+          </div>
+        </div>
+        <br>
+
+        <!-- Gender, min_age & capacity -->
+        <div class="top-row">
+
+          <div class="field-wrap one-third">
+            <h5>Gender:</h5>
+            <select name="sex_requirement">
+              <option value="unlimit" selected="selected">No limit</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="field-wrap one-third">
+            <h5>Min age:</h5>
+            <input name="min_age" type="number" value="18" autocomplete="off"/>
+          </div>
+
+          <div class="field-wrap one-third">
+            <h5>Capacity:</h5>
+            <input name="max_size" type="number" value="100" autocomplete="off"/>
+          </div>
+
+        </div>
+        <br>
+
+        <!-- location -->
+        <div class="field-wrap">
+          <h5>Location:</h5>
+          <input name="place" type="text" required autocomplete="off"/>
+        </div>
+        <br>
+
+        <!-- Description -->
+        <div class="field-wrap field-wrap-tall">
+          <h5>Description:</h5>
+          <textarea name="explanation" autocomplete="off"/></textarea>
+        </div>
+        <br>
+
+        <!-- picture -->
+        <div class="field-wrap">
+          <h5>Upload picture:</h5>
+          <input id="pic" type="file" name="picture" accept=".jpg, .jpeg, .png">
+        </div>
+        <br>
+
+      </form><!-- form -->
+      <button class="button button-block" onclick="postActivity()">Submit!</button>
+    </div><!-- div.tab-content -->
+  </div><!-- div.form -->
+  <!--==================== Content ====================-->
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript">
+    function fillActivity(activity) {
+      var form = document.getElementById('new_activity').elements;
+      for(var key in activity) {
+        if (form[key] && key !== 'picture') {
+          form[key].value = activity[key]
+        }
+      }
+    }
+
+    var activityId = window.location.search.split("=")[1];
+    if (activityId) {
+      console.log('activityId: ' + activityId);
+      getActivityById(window.location.search.split("=")[1], fillActivity);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/custom.css"">
+  <title>HangOut</title>
+</head>
+<body onload="getUser();initPage();getAttends();">
+
+  <!--==================== Navbar ====================-->
+  <nav class="navbar sticky-top navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">HangOut</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <span class="fa fa-home"></span> Home <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="add_activity.html">
+            <span class="fa fa-plus"></span> Create Activity
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="my_activities.html">
+            <span class="fa fa-comment"></span> My Activities
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a id="show-username" class="nav-link" href="user.html">
+            <span class="fa fa-user"></span> Sign in
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="logout()">
+            <span class="fa fa-sign-out"></span> Sign out
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <!--==================== Navbar ====================-->
+
+  <!--==================== Filer ====================-->
+  <div class="form form-login">
+    <div class="table-content"">
+      <h1 id="activity-name"></h1>
+      <h5 style="text-align: center;"><span id="activity-current_size"></span> / <span id="activity-max_size"></span></h5>
+      <ul class="tab-group">
+        <li class="tab active"><a href="#detail">Activity Detail</a></li>
+        <li class="tab"><a href="#attendance">Activity Attendance</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--==================== Filer ====================-->
+
+  <!--==================== Content ====================-->
+  <div class="container">
+    <div id="activities-frame" class="row">
+
+      <div style="width: 50%;height: 0px;padding-bottom: 50%;position: relative;">
+        <img id="activity-picture" alt="Activity Picture" style="width: 100%;height: 100%;position: absolute;">
+      </div>
+
+      <div class="tab-content col-6">
+        <div id="detail">
+          <table  class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th style="width: 20%">Attribute</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Time</th>
+                <td><span id="activity-start_time"></span>  ~  <span id="activity-end_time"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Application Deadline</th>
+                <td><span id="activity-applyend_time"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Place</th>
+                <td><span id="activity-place"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Organizer</th>
+                <td><span id="activity-userId"></span>
+              </tr>
+              <tr>
+                <th scope="row">Type</th>
+                <td><span id="activity-type"></span>
+              </tr>
+              <tr>
+                <th scope="row">Age requirement</th>
+                <td><span id="activity-min_age"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Gender requirement</th>
+                <td><span id="activity-sex_requirement"></span></td>
+              </tr>
+              <tr>
+                <th scope="row">Description</th>
+                <td><span id="activity-explanation"></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="attendance">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th>Nickname</th>
+                <th>Gender</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody id="attend-list">>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="delete-btn" class="col-1 offset-5">
+      </div>
+
+
+    </div>
+  </div>
+  <!--==================== Content ====================-->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  <script type="text/javascript">
+
+    var ALL_FIELDS = [
+      'applyend_time',
+      'end_time',
+      'explanation',
+      'max_size',
+      'min_age',
+      'name',
+      'place',
+      'sex_requirement',
+      'start_time',
+      'type',
+      'userId'
+    ];
+
+    var ACTTYPE = {
+      "1": "Movie",
+      "2": "Sports",
+      "3": "Party",
+      "4": "Meal",
+      "5": "Academic",
+      "6": "Others"
+    };
+
+    var activityId = window.location.search.split("=")[1]
+
+    function initPage() {
+      getActivityById(activityId, renderActivityDetails);
+    }
+
+    function renderActivityDetails(activity) {
+      ALL_FIELDS.forEach(function(field) {
+        var node = document.getElementById('activity-' + field);
+        node.textContent = activity[field];
+        if (field === 'type') {
+            node.textContent = ACTTYPE[activity[field]];
+        }
+      });
+
+      var node = document.getElementById('activity-picture');
+      node.setAttribute('src', activity.picture);
+
+      if (activity.userId === localStorage.getItem('hangout_account')) {
+        document.getElementById('delete-btn').innerHTML = `
+<button class="btn btn-danger" onclick="deleteActivity('${activityId}')">Delete</button>
+        `;
+      }
+    }
+
+    function getAttends() {
+      fetch(apiGateWay + 'people?activityid=' + activityId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('hangout_idtoken')
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        console.log(data.users);
+        renderAttends(data.users);
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function renderAttends(users) {
+      var frame = document.getElementById('attend-list');
+      var userSet = {}
+      users.forEach(function(user) {
+        if (!userSet[user.email]) {
+          userSet[user.email] = true;
+          frame.appendChild(renderAttend(user));
+        }
+      });
+      document.getElementById('activity-current_size').textContent = Object.keys(userSet).length;
+
+    }
+
+    function renderAttend(user) {
+      var node = createNode('tr', []);
+      node.innerHTML = `
+<td>${user.nickname}</td>
+<td>${user.gender}</td>
+<td>${user.age}</td>
+      `;
+      return node;
+    }
+  </script>
+</body>
+</html>

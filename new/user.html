@@ -1,0 +1,246 @@
+﻿<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/custom.css"">
+  <title>HangOut</title>
+</head>
+<body onload="getUser();fillInfo()">
+
+  <!--==================== Navbar ====================-->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">HangOut</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">
+            <span class="fa fa-home"></span> Home <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="add_activity.html">
+            <span class="fa fa-plus"></span> Create Activity
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="my_activities.html">
+            <span class="fa fa-comment"></span> My Activities
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a id="show-username" class="nav-link" href="#">
+            <span class="fa fa-user"></span> Sign in
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" onclick="logout()">
+            <span class="fa fa-sign-out"></span> Sign out
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <!--==================== Navbar ====================-->
+
+  <div class="form form-login">
+    <ul class="tab-group">
+      <li class="tab active"><a href="#change-profile">Change Profile</a></li>
+      <li class="tab"><a href="#change-password">Change Password</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="change-profile">
+
+        <form>
+
+        <div class="top-row">
+          <div class="field-wrap">
+            <label>
+              Nickname<span class="req">*</span>
+            </label>
+            <input id="nickname" name="nickname" type="text" required autocomplete="off"/>
+          </div>
+
+          <div class="field-wrap quarter">
+            <label>
+              Age<span class="req">*</span>
+            </label>
+            <input type="number" name="age" id="age">
+          </div>
+
+          <div class="field-wrap quarter">
+            <select name="gender" id="gender">
+              <option value="" selected="selected">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="field-wrap">
+          <label>
+            Phone number
+          </label>
+          <input id="phone" name="phone" type="text" autocomplete="off"/>
+        </div>
+
+
+        </form>
+        <button class="button button-block" onclick="submitInfo()">Update</button>
+      </div>
+
+      <div id="change-password">
+
+        <form>
+
+        <div class="field-wrap">
+          <label for="old_pass">
+            Old password<span class="req">*</span>
+          </label>
+          <input id="old_pass" type="password" required name="old_pass" autocomplete="off"/>
+        </div>
+
+        <div class="field-wrap">
+          <label for="new_pass1">
+            New password<span class="req">*</span>
+          </label>
+          <input id="new_pass1" type="password" required name="new_pass1" autocomplete="off"/>
+        </div>
+
+        <div class="field-wrap">
+          <label for="new_pass2">
+            Confirm new password<span class="req">*</span>
+          </label>
+          <input id="new_pass2" type="password" required name="new_pass2" autocomplete="off"/>
+        </div>
+
+        <p class="forgot"><a href="#">Forgot Password?</a></p>
+        </form>
+        <button class="button button-block" onclick="changeUserPwd()">Update</button>
+
+      </div>
+    </div><!-- tab-content -->
+  </div> <!-- /form -->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  <script>
+
+    function fillInfo() {
+      fetch(apiGateWay + 'profile/', {
+        body: JSON.stringify({token: localStorage.getItem('hangout_accesstoken')}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem("hangout_idtoken")},
+          'method': "PUT",
+        }).then(function(res){
+          console.log(res);
+          return res.json();
+        }).then(function(data) {
+          console.log(data);
+          ['phone', 'age', 'gender', 'nickname'].forEach(function(field) {
+            if (data[field]) {
+              document.getElementById(field).value = data[field];
+              $('#' + field).trigger('keyup');
+            }
+          });
+        }).catch(function(error) {
+          console.log(error);
+        });
+    }
+
+    function submitInfo() {
+
+      var info = {
+        token: localStorage.getItem('hangout_accesstoken'),
+        nickname: $("input[name='nickname']").val(),
+        age: $("input[name='age']").val(),
+        phone: $("input[name='phone']").val(),
+        gender: document.getElementById('gender').value,
+      }
+      console.log(JSON.stringify(info));
+
+      $.ajax({
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/profile',
+        type: 'post',
+        dataType: 'json',
+        contentType: "application/json",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('hangout_idtoken'),
+        },
+        data: JSON.stringify(info),
+        success: function (data) {
+          //alert(data.msg);
+          console.log(data);
+          if (data.Error) {
+            alert(data.Error);
+          }
+          else {
+            alert('Profile changed!')
+          }
+        },
+      });
+    }
+
+    function changeUserPwd() {
+      var info = {
+        username: localStorage.getItem('hangout_account'),
+        old_pass: $("#old_pass").val(),
+        new_pass: $("#new_pass1").val(),
+        new_pass2: $("#new_pass2").val(),
+        token: localStorage.getItem('hangout_accesstoken'),
+      };
+
+      console.log(JSON.stringify(info));
+      $.ajax({
+        url: 'https://w217imcezl.execute-api.us-east-1.amazonaws.com/test/resetpass',
+        type: 'post',
+        dataType: 'json',
+        contentType: "application/json",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('hangout_idtoken'),
+        },
+        success: function (data) {
+          //alert(data.msg);
+          console.log(data);
+          if (data.Error) {
+            if (data.Error == 'UserNotFoundException') {
+              alert('User not found');
+              return;
+            }
+            if (data.Error == 'NotAuthorizedException') {
+              alert('Incorrect password');
+              return;
+            }
+            if (data.Error == 'TooManyRequestsException') {
+              alert('Operation too frequently');
+              return;
+            }
+            alert('Other errors');
+              return;
+          }
+          alert('Success!');
+        },
+        data: JSON.stringify(info),
+      });
+    }
+  </script>
+</body>
+</html>
